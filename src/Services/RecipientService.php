@@ -41,6 +41,30 @@ class RecipientService extends InmobileServiceBase
     }
 
     /**
+     * Get recipient by number.
+     *
+     * @param string $listId
+     * @param string|int $code
+     * @param string|int $phone
+     * @return Recipient|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     */
+    public function findByNumber(
+        string $listId,
+        string|int $code,
+        string|int $phone
+    ): ?Recipient {
+        $model = $this->api->performRequest("lists/$listId/recipients/ByNumber", 'GET', [
+            'countryCode' => $code,
+            'phoneNumber' => $phone,
+        ]);
+
+        return $model ? new Recipient($model) : null;
+    }
+
+    /**
      * Delete recipient by Id.
      *
      * @return array|null
