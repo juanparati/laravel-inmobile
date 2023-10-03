@@ -2,6 +2,7 @@
 
 namespace Juanparati\Inmobile\Models;
 
+use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 /**
@@ -22,32 +23,34 @@ class MessageTemplate extends MessageBase implements PostModel
      * Default model.
      */
     protected array $model = [
-        'to' => null,
-        'countryHint' => null,
-        'messageId' => null,
-        'respectBlacklist' => true,
+        'to'                      => null,
+        'countryHint'             => null,
+        'messageId'               => null,
+        'respectBlacklist'        => true,
         'validityPeriodInSeconds' => 90,
-        'statusCallbackUrl' => null,
-        'sendTime' => null,
-        'placeholders' => [],
+        'statusCallbackUrl'       => null,
+        'sendTime'                => null,
+        'placeholders'            => [],
     ];
 
     /**
      * Factory method.
      *
-     * @param  string  $templateId
+     * @param string|int $code
+     * @param string|int $phone
+     * @param string|int $from
+     * @return static
      */
     public static function make(
         string|int $code,
         string|int $phone,
         string|int $from,
-    ): static {
-        $code = str_replace('+', '', (string) $code);
-
+    ): static
+    {
         return new static([
-            'to' => $code.$phone,
+            'to'          => $code . $phone,
             'countryHint' => $code,
-            'from' => $from,
+            'from'        => $from,
         ]);
     }
 
@@ -69,7 +72,7 @@ class MessageTemplate extends MessageBase implements PostModel
     public function asPostData(): array
     {
         $model = $this->model;
-        $model['sendTime'] = $model['sendTime']->format(static::DEFAULT_DATE_FORMAT);
+        $model['sendTime'] = $model['sendTime']->format(Inmobile::DEFAULT_DATE_FORMAT);
 
         return $model;
     }

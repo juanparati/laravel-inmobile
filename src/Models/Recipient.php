@@ -5,47 +5,39 @@ namespace Juanparati\Inmobile\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 class Recipient implements Arrayable, PostModel
 {
-    /**
-     * Default date format.
-     */
-    protected const DEFAULT_DATE_FORMAT = 'Y-m-d\TH:i:s\Z';
-
-    /**
-     * Default used timezone.
-     */
-    protected const DEFAULT_TIMEZONE = 'UTC';
 
     /**
      * Default model.
      */
     protected array $model = [
         'externalCreated' => null,
-        'numberInfo' => [
+        'numberInfo'      => [
             'countryCode' => null,
             'phoneNumber' => null,
         ],
-        'fields' => [
-            'firstname' => null,
-            'lastname' => null,
-            'birthday' => null,
-            'custom1' => null,
-            'custom2' => null,
-            'custom3' => null,
-            'custom4' => null,
-            'custom5' => null,
-            'custom6' => null,
-            'email' => null,
-            'zipCode' => null,
-            'address' => null,
+        'fields'          => [
+            'firstname'   => null,
+            'lastname'    => null,
+            'birthday'    => null,
+            'custom1'     => null,
+            'custom2'     => null,
+            'custom3'     => null,
+            'custom4'     => null,
+            'custom5'     => null,
+            'custom6'     => null,
+            'email'       => null,
+            'zipCode'     => null,
+            'address'     => null,
             'companyName' => null,
         ],
-        'id' => null,
-        'listId' => null,
-        'created' => null,
+        'id'              => null,
+        'listId'          => null,
+        'created'         => null,
     ];
 
     /**
@@ -59,9 +51,7 @@ class Recipient implements Arrayable, PostModel
             $this->setCode($this->model['numberInfo']['countryCode']);
         }
 
-        $this->model['externalCreated'] = $this->model['externalCreated']
-            ? now()->parse($this->model['externalCreated'])->setTimezone(static::DEFAULT_TIMEZONE)->toImmutable()
-            : now()->setTimezone(static::DEFAULT_TIMEZONE)->toImmutable();
+        $this->setCreatedAt($this->model['externalCreated'] ?: now());
     }
 
     /**
@@ -71,8 +61,8 @@ class Recipient implements Arrayable, PostModel
     {
         return new static([
             'numberInfo' => [
-                'countryCode' => (string) $code,
-                'phoneNumber' => (string) $phone,
+                'countryCode' => (string)$code,
+                'phoneNumber' => (string)$phone,
             ],
         ]);
     }
@@ -84,7 +74,7 @@ class Recipient implements Arrayable, PostModel
      */
     public function setCode(string|int $code): static
     {
-        $this->model['numberInfo']['countryCode'] = str_replace('+', '', (string) $code);
+        $this->model['numberInfo']['countryCode'] = str_replace('+', '', (string)$code);
 
         return $this;
     }
@@ -96,7 +86,7 @@ class Recipient implements Arrayable, PostModel
      */
     public function setPhone(string|int $phone): static
     {
-        $this->model['numberInfo']['phoneNumber'] = (string) $phone;
+        $this->model['numberInfo']['phoneNumber'] = (string)$phone;
 
         return $this;
     }
@@ -124,11 +114,11 @@ class Recipient implements Arrayable, PostModel
      */
     public function addField(string $field, string|int|float $value): static
     {
-        if (! array_key_exists($field, $this->model['fields'])) {
+        if (!array_key_exists($field, $this->model['fields'])) {
             throw new \RuntimeException("$field is not allowed");
         }
 
-        $this->model['fields'][$field] = (string) $value;
+        $this->model['fields'][$field] = (string)$value;
 
         return $this;
     }
@@ -152,10 +142,12 @@ class Recipient implements Arrayable, PostModel
      *
      * @return $this
      */
-    public function setCreatedAt(string|CarbonInterface $dateTime): static
+    public function setCreatedAt(string|CarbonInterface|\DateTime $dateTime): static
     {
-        $dateTime = $dateTime instanceof CarbonInterface ? $dateTime : now()->parse($dateTime);
-        $this->model['externalCreated'] = $dateTime->setTimezone(static::DEFAULT_TIMEZONE);
+        $this->model['externalCreated'] = now()
+            ->parse($dateTime)
+            ->setTimezone(Inmobile::DEFAULT_TIMEZONE)
+            ->toImmutable();
 
         return $this;
     }
@@ -195,7 +187,7 @@ class Recipient implements Arrayable, PostModel
         Arr::forget($model, 'listId');
         Arr::forget($model, 'created');
 
-        $model['externalCreated'] = $model['externalCreated']->format(static::DEFAULT_DATE_FORMAT);
+        $model['externalCreated'] = $model['externalCreated']->format(Inmobile::DEFAULT_DATE_FORMAT);
 
         return $model;
     }

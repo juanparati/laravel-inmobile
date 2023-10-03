@@ -4,28 +4,25 @@ namespace Juanparati\Inmobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 class Blacklist implements Arrayable, PostModel
 {
-    /**
-     * Default used timezone.
-     */
-    protected const DEFAULT_TIMEZONE = 'UTC';
 
     /**
      * Default model.
      */
     protected array $model = [
-        'numberInfo' => [
+        'numberInfo'            => [
             'countryCode' => null,
             'phoneNumber' => null,
         ],
-        'comment' => null,
-        'removeFromAllLists' => false,
-        'id' => null,
-        'created' => null,
-        'reasonCode' => null,
+        'comment'               => null,
+        'removeFromAllLists'    => false,
+        'id'                    => null,
+        'created'               => null,
+        'reasonCode'            => null,
         'reasonCodeDescription' => null,
     ];
 
@@ -41,8 +38,8 @@ class Blacklist implements Arrayable, PostModel
         }
 
         $this->model['created'] = $this->model['created']
-            ? now()->parse($this->model['created'])->setTimezone(static::DEFAULT_TIMEZONE)->toImmutable()
-            : now()->setTimezone(static::DEFAULT_TIMEZONE)->toImmutable();
+            ? now()->parse($this->model['created'])->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable()
+            : now()->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable();
     }
 
     /**
@@ -51,9 +48,9 @@ class Blacklist implements Arrayable, PostModel
     public static function make(string|int $code, string|int $phone, bool $removeFromAllLists = false): static
     {
         return new static([
-            'numberInfo' => [
-                'countryCode' => (string) $code,
-                'phoneNumber' => (string) $phone,
+            'numberInfo'         => [
+                'countryCode' => (string)$code,
+                'phoneNumber' => (string)$phone,
             ],
             'removeFromAllLists' => $removeFromAllLists,
         ]);
@@ -66,7 +63,7 @@ class Blacklist implements Arrayable, PostModel
      */
     public function setCode(string|int $code): static
     {
-        $this->model['numberInfo']['countryCode'] = str_replace('+', '', (string) $code);
+        $this->model['numberInfo']['countryCode'] = str_replace('+', '', (string)$code);
 
         return $this;
     }
@@ -78,7 +75,7 @@ class Blacklist implements Arrayable, PostModel
      */
     public function setPhone(string|int $phone): static
     {
-        $this->model['numberInfo']['phoneNumber'] = (string) $phone;
+        $this->model['numberInfo']['phoneNumber'] = (string)$phone;
 
         return $this;
     }

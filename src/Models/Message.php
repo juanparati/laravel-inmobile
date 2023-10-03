@@ -3,6 +3,7 @@
 namespace Juanparati\Inmobile\Models;
 
 use Juanparati\Inmobile\Enums\Encoding;
+use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 /**
@@ -26,40 +27,39 @@ class Message extends MessageBase implements PostModel
      * Default model.
      */
     protected array $model = [
-        'to' => null,
-        'countryHint' => null,
-        'messageId' => null,
-        'respectBlacklist' => true,
+        'to'                      => null,
+        'countryHint'             => null,
+        'messageId'               => null,
+        'respectBlacklist'        => true,
         'validityPeriodInSeconds' => 90,
-        'statusCallbackUrl' => null,
-        'sendTime' => null,
-        'text' => null,
-        'from' => null,
-        'flash' => false,
-        'encoding' => Encoding::GSM7,
+        'statusCallbackUrl'       => null,
+        'sendTime'                => null,
+        'text'                    => null,
+        'from'                    => null,
+        'flash'                   => false,
+        'encoding'                => Encoding::GSM7,
     ];
 
     /**
      * Factory method.
      *
-     * @param  string|int  $code Destination country code
-     * @param  string|int  $phone Destination phone (without country code)
-     * @param  string|int  $from Sender
-     * @param  string  $text Message
+     * @param string|int $code Destination country code
+     * @param string|int $phone Destination phone (without country code)
+     * @param string|int $from Sender
+     * @param string $text Message
      */
     public static function make(
         string|int $code,
         string|int $phone,
         string|int $from,
-        string $text
-    ): static {
-        $code = str_replace('+', '', (string) $code);
-
+        string     $text
+    ): static
+    {
         return new static([
-            'to' => $code.$phone,
+            'to'          => $code . $phone,
             'countryHint' => $code,
-            'from' => $from,
-            'text' => $text,
+            'from'        => $from,
+            'text'        => $text,
         ]);
     }
 
@@ -117,7 +117,7 @@ class Message extends MessageBase implements PostModel
     public function asPostData(): array
     {
         $model = $this->model;
-        $model['sendTime'] = $model['sendTime']->format(static::DEFAULT_DATE_FORMAT);
+        $model['sendTime'] = $model['sendTime']->format(Inmobile::DEFAULT_DATE_FORMAT);
         $model['encoding'] = $model['encoding']->value;
 
         return $model;

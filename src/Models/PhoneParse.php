@@ -26,11 +26,11 @@ class PhoneParse implements Arrayable, PostModel
      * @var array|null[]
      */
     protected array $model = [
-        'countryHint' => null,
-        'rawMsisdn' => null,
-        'countryCode' => null,
-        'phoneNumber' => null,
-        'msisdn' => null,
+        'countryHint'   => null,
+        'rawMsisdn'     => null,
+        'countryCode'   => null,
+        'phoneNumber'   => null,
+        'msisdn'        => null,
         'isValidMsisdn' => false,
     ];
 
@@ -53,7 +53,7 @@ class PhoneParse implements Arrayable, PostModel
     {
         return new static([
             'countryHint' => $code,
-            'rawMsisdn' => $rawMsisdn,
+            'rawMsisdn'   => $rawMsisdn,
         ]);
     }
 
@@ -64,7 +64,7 @@ class PhoneParse implements Arrayable, PostModel
      */
     public function setCountryHint(string|int $code): static
     {
-        $this->model['countryHint'] = str_replace('+', '', (string) $code);
+        $this->model['countryHint'] = str_replace('+', '', (string)$code);
 
         return $this;
     }
@@ -76,7 +76,7 @@ class PhoneParse implements Arrayable, PostModel
      */
     public function setRawMsisdn(string|int $rawMsisdn): static
     {
-        $this->model['rawMsisdn'] = (string) $rawMsisdn;
+        $this->model['rawMsisdn'] = (string)$rawMsisdn;
 
         return $this;
     }
@@ -100,7 +100,7 @@ class PhoneParse implements Arrayable, PostModel
     {
         return [
             'countryHint' => $this->model['countryHint'],
-            'rawMsisdn' => $this->model['rawMsisdn'],
+            'rawMsisdn'   => $this->model['rawMsisdn'],
         ];
     }
 }

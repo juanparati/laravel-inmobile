@@ -4,33 +4,25 @@ namespace Juanparati\Inmobile\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
 
 abstract class MessageBase implements Arrayable
 {
     use HasCallableAttributes;
 
-    /**
-     * Default date format.
-     */
-    protected const DEFAULT_DATE_FORMAT = 'Y-m-d\TH:i:s\Z';
-
-    /**
-     * Default used timezone.
-     */
-    protected const DEFAULT_TIMEZONE = 'UTC';
 
     /**
      * Default model.
      */
     protected array $model = [
-        'to' => null,
-        'countryHint' => null,
-        'messageId' => null,
-        'respectBlacklist' => true,
+        'to'                      => null,
+        'countryHint'             => null,
+        'messageId'               => null,
+        'respectBlacklist'        => true,
         'validityPeriodInSeconds' => 90,
-        'statusCallbackUrl' => null,
-        'sendTime' => null,
+        'statusCallbackUrl'       => null,
+        'sendTime'                => null,
     ];
 
     /**
@@ -40,9 +32,14 @@ abstract class MessageBase implements Arrayable
     {
         $this->model = array_merge($this->model, $model);
         $this->model['messageId'] = $this->model['messageId'] ?: uniqid('api_');
-        $this->model['sendTime'] = $this->model['sendTime']
-            ? now()->parse($this->model['sendTime'])->setTimezone(static::DEFAULT_TIMEZONE)->toImmutable()
-            : now()->setTimezone(static::DEFAULT_TIMEZONE)->toImmutable();
+
+        if ($this->model['to'])
+            $this->setTo($this->model['to']);
+
+        if ($this->model['countryHint'])
+            $this->setCountryHint($this->model['countryHint']);
+
+        $this->setSendTime($this->model['sendTime'] ?: now());
     }
 
     /**
@@ -52,7 +49,7 @@ abstract class MessageBase implements Arrayable
      */
     public function setTo(string|int $to): static
     {
-        $this->model['to'] = (string) $to;
+        $this->model['to'] = str_replace('+', '', $to);
 
         return $this;
     }
@@ -64,7 +61,7 @@ abstract class MessageBase implements Arrayable
      */
     public function setCountryHint(string|int $code): static
     {
-        $this->model['countryHint'] = (string) $code;
+        $this->model['countryHint'] = str_replace('+', '', $code);
 
         return $this;
     }
@@ -76,7 +73,7 @@ abstract class MessageBase implements Arrayable
      */
     public function setMessageId(string|int $id): static
     {
-        $this->model['messageId'] = (string) $id;
+        $this->model['messageId'] = (string)$id;
 
         return $this;
     }
@@ -122,9 +119,12 @@ abstract class MessageBase implements Arrayable
      *
      * @return $this
      */
-    public function setSendTime(CarbonInterface $dateTime): static
+    public function setSendTime(CarbonInterface|string|\DateTime $dateTime): static
     {
-        $this->model['sendTime'] = $dateTime;
+        $this->model['sendTime'] = now()
+            ->parse($dateTime)
+            ->setTimezone(Inmobile::DEFAULT_TIMEZONE)
+            ->toImmutable();
 
         return $this;
     }

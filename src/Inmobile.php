@@ -14,6 +14,18 @@ use Juanparati\Inmobile\Services\ToolService;
 
 class Inmobile
 {
+
+    /**
+     * Default timezone used by inMobile dates.
+     */
+    const DEFAULT_TIMEZONE = 'UTC';
+
+    /**
+     * Default format used by inMobile dates.
+     */
+    const DEFAULT_DATE_FORMAT = 'Y-m-d\TH:i:s\Z';
+
+
     /**
      * Guzzle Http client instance.
      */
