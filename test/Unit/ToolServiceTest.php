@@ -6,6 +6,15 @@ use Juanparati\Inmobile\Models\PhoneParse;
 
 class ToolServiceTest extends InmobileTestBase
 {
+
+    /**
+     * Test phone number parsing.
+     *
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     */
     public function testParseNumber()
     {
         $resp = $this->api()

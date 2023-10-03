@@ -11,12 +11,15 @@ class ListServiceTest extends InmobileTestBase
      * Test that is possible to retrieve all the lists.
      *
      * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
     public function testAllLists()
     {
         $resp = $this->api()
             ->lists()
-            ->getAll(2);
+            ->all(2);
 
         $this->assertInstanceOf(PaginatedResults::class, $resp);
     }
@@ -35,19 +38,19 @@ class ListServiceTest extends InmobileTestBase
 
         $respCreate = $this->api()
             ->lists()
-            ->createList('(UNIT TEST)');
+            ->create('(UNIT TEST)');
 
         $this->assertNotNull($respCreate->getId());
 
         $respList = $this->api()
             ->lists()
-            ->getList($respCreate->getId());
+            ->find($respCreate->getId());
 
         $this->assertEquals($respCreate->getName(), $respList->getName());
 
         $respDelete = $this->api()
             ->lists()
-            ->deleteList($respCreate->getId());
+            ->delete($respCreate->getId());
 
         $this->assertEmpty($respDelete);
     }
@@ -65,13 +68,13 @@ class ListServiceTest extends InmobileTestBase
     {
         $respList = $this->api()
             ->lists()
-            ->createList('(UNIT TEST REC)');
+            ->create('(UNIT TEST REC)');
 
         $this->assertNotNull($respList->getId());
 
         $respRecipient = $this->api()
-            ->lists()
-            ->createRecipient(
+            ->recipients()
+            ->create(
                 $respList->getId(),
                 Recipient::make('45', '12345678')
                     ->addField('firstname', 'John')
@@ -83,8 +86,8 @@ class ListServiceTest extends InmobileTestBase
         $this->assertNotNull($respRecipient->getId());
 
         $respRecipient = $this->api()
-            ->lists()
-            ->updateOrCreateRecipientByNumber(
+            ->recipients()
+            ->updateOrCreateByNumber(
                 $respList->getId(),
                 $respRecipient->getCode(),
                 $respRecipient->getPhone(),
@@ -100,6 +103,6 @@ class ListServiceTest extends InmobileTestBase
 
         $this->api()
             ->lists()
-            ->deleteList($respList->getId());
+            ->delete($respList->getId());
     }
 }

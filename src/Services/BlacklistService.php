@@ -2,6 +2,7 @@
 
 namespace Juanparati\Inmobile\Services;
 
+use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
 use Juanparati\Inmobile\Models\Blacklist;
 use Juanparati\Inmobile\Models\PaginatedResults;
 
@@ -35,7 +36,7 @@ class BlacklistService extends InmobileServiceBase
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function createEntry(Blacklist $blacklist): ?Blacklist
+    public function create(Blacklist $blacklist): ?Blacklist
     {
         $model = $this->api->performRequest('blacklist', 'POST', $blacklist->asPostData());
 
@@ -49,9 +50,26 @@ class BlacklistService extends InmobileServiceBase
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function getEntryById(string $id): ?Blacklist
+    public function findById(string $id): ?Blacklist
     {
         $model = $this->api->performRequest("blacklist/$id", 'GET');
+
+        return $model ? new Blacklist($model) : null;
+    }
+
+    /**
+     * Get entry by number.
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     */
+    public function findByNumber(string|int $code, string|int $phone): ?Blacklist
+    {
+        $model = $this->api->performRequest('blacklist/ByNumber', 'GET', [
+            'countryCode' => PhoneCodeHelper::sanitize($code),
+            'phoneNumber' => $phone,
+        ]);
 
         return $model ? new Blacklist($model) : null;
     }
@@ -63,26 +81,9 @@ class BlacklistService extends InmobileServiceBase
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function deleteEntryById(string $id): array
+    public function deleteById(string $id): array
     {
         return $this->api->performRequest("blacklist/$id", 'DELETE');
-    }
-
-    /**
-     * Get entry by number.
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
-     */
-    public function getEntryByNumber(string|int $code, string|int $phone): ?Blacklist
-    {
-        $model = $this->api->performRequest('blacklist/ByNumber', 'GET', [
-            'countryCode' => $code,
-            'phoneNumber' => $phone,
-        ]);
-
-        return $model ? new Blacklist($model) : null;
     }
 
     /**
@@ -92,10 +93,10 @@ class BlacklistService extends InmobileServiceBase
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function deleteEntryByNumber(string|int $code, string|int $phone): array
+    public function deleteByNumber(string|int $code, string|int $phone): array
     {
         return $this->api->performRequest('blacklist/ByNumber', 'DELETE', [
-            'countryCode' => $code,
+            'countryCode' => PhoneCodeHelper::sanitize($code),
             'phoneNumber' => $phone,
         ]);
     }

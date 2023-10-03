@@ -3,6 +3,7 @@
 namespace Juanparati\Inmobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
 
@@ -64,7 +65,7 @@ class PhoneParse implements Arrayable, PostModel
      */
     public function setCountryHint(string|int $code): static
     {
-        $this->model['countryHint'] = str_replace('+', '', (string)$code);
+        $this->model['countryHint'] = PhoneCodeHelper::sanitize($code);
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace Juanparati\Inmobile\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
 
@@ -49,7 +50,7 @@ abstract class MessageBase implements Arrayable
      */
     public function setTo(string|int $to): static
     {
-        $this->model['to'] = str_replace('+', '', $to);
+        $this->model['to'] = PhoneCodeHelper::sanitize($to);
 
         return $this;
     }
@@ -61,7 +62,7 @@ abstract class MessageBase implements Arrayable
      */
     public function setCountryHint(string|int $code): static
     {
-        $this->model['countryHint'] = str_replace('+', '', $code);
+        $this->model['countryHint'] = PhoneCodeHelper::sanitize($code);
 
         return $this;
     }

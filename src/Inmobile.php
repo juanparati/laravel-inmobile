@@ -9,6 +9,7 @@ use Juanparati\Inmobile\Exceptions\InmobileRequestException;
 use Juanparati\Inmobile\Services\BlacklistService;
 use Juanparati\Inmobile\Services\GdprService;
 use Juanparati\Inmobile\Services\ListService;
+use Juanparati\Inmobile\Services\RecipientService;
 use Juanparati\Inmobile\Services\SmsService;
 use Juanparati\Inmobile\Services\ToolService;
 
@@ -92,11 +93,9 @@ class Inmobile
             case 500:
             case 400:
                 throw new InmobileRequestException($response->getBody(), $statusCode);
-                break;
 
             case 401:
                 throw new InmobileAuthorizationException($response->getBody(), $statusCode);
-                break;
 
             case 404:
                 if (! empty($message['errorMessage']) && Str::contains($message['errorMessage'], 'invalid resource', true)) {
@@ -106,7 +105,6 @@ class Inmobile
 
             default:
                 throw new InmobileRequestException('Unknown error: '.$response->getBody(), $statusCode);
-                break;
         }
 
         return null;
@@ -118,6 +116,16 @@ class Inmobile
     public function lists(): ListService
     {
         return new ListService($this);
+    }
+
+    /**
+     * Provide the recipients service.
+     *
+     * @return RecipientService
+     */
+    public function recipients(): RecipientService
+    {
+        return new RecipientService($this);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Juanparati\Inmobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
@@ -63,7 +64,7 @@ class Blacklist implements Arrayable, PostModel
      */
     public function setCode(string|int $code): static
     {
-        $this->model['numberInfo']['countryCode'] = str_replace('+', '', (string)$code);
+        $this->model['numberInfo']['countryCode'] = PhoneCodeHelper::sanitize($code);
 
         return $this;
     }
