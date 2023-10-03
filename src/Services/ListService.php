@@ -21,7 +21,7 @@ class ListService extends InmobileServiceBase
     public function getAll(int $limit = 250): ?PaginatedResults
     {
         $limit = $limit ?: 1;
-        $limit = $limit > 250 ? 250 : $limit;
+        $limit = min($limit, 250);
 
         return new PaginatedResults(
             $this->api,
@@ -100,7 +100,7 @@ class ListService extends InmobileServiceBase
     public function getRecipientsInList(string $listId, int $limit = 250): ?PaginatedResults
     {
         $limit = $limit ?: 1;
-        $limit = $limit > 250 ? 250 : $limit;
+        $limit = min($limit, 250);
 
         return new PaginatedResults(
             $this->api,

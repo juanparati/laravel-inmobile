@@ -2,90 +2,105 @@
 
 namespace Juanparati\Inmobile\Models;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
-class PaginatedResults extends \NoRewindIterator implements Arrayable
+class PaginatedResults extends \NoRewindIterator
 {
+
     /**
-     * Current page.
+     * Current row relative to the page.
+     *
+     * @var int
      */
-    protected int $pageNum = 1;
+    protected int $currentRelativeRow = 0;
+
+
+    /**
+     * Current absolute row.
+     *
+     * @var int
+     */
+    protected int $currentRow = 0;
+
 
     /**
      * Constructor.
      *
-     * @param  int  $limit
+     * @param Inmobile $api
+     * @param array $result
+     * @param string|null $modelType
      */
     public function __construct(
         protected Inmobile $api,
         protected array $result,
         protected ?string $modelType = null
-    ) {
-    }
+    ) {}
+
 
     /**
      * Indicates if the page is the last.
      *
      * @return mixed|true
      */
-    public function isLastPage()
-    {
+    public function isLastPage() {
         return $this->result['_links']['isLastPage'] ?? true;
     }
 
-    /**
-     * Return entries.
-     */
-    public function toArray(): array
-    {
-        /**
-         * @var $modelType PostModel|null
-         */
-        $modelType = $this->modelType;
-
-        return empty($this->result['entries'])
-            ? [] : array_map(fn ($r) => $modelType ? new $modelType($r) : $r, $this->result['entries']);
-    }
 
     /**
      * Return current page.
+     *
+     * @return array|PostModel
      */
-    public function current(): array
+    public function current() : array|PostModel
     {
-        return $this->toArray();
+        $model = $this->result['entries'][$this->currentRelativeRow];
+
+        if ($this->modelType) {
+            /**
+             * @var $modelType PostModel|null
+             */
+            $modelType = $this->modelType;
+            $model = new $modelType($model);
+        }
+
+        return $model;
     }
+
 
     /**
      * Move to next page.
      *
+     * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
     public function next(): void
     {
-        if ($this->isLastPage()) {
-            throw new \RuntimeException('No more pages');
+        if (!isset($this->result['entries'][++$this->currentRelativeRow])) {
+            if (!$this->isLastPage()) {
+                $this->result = $this->api->performRequest(
+                    Str::replaceFirst('/' . $this->api->getVersion() . '/', '', $this->result['_links']['next']),
+                    'GET'
+                );
+
+                $this->currentRelativeRow = 0;
+            }
         }
 
-        $this->result = $this->api->performRequest(
-            Str::replaceFirst('/'.$this->api->getVersion().'/', '', $this->result['_links']['next']),
-            'GET'
-        );
-
-        $this->pageNum++;
+        $this->currentRow++;
     }
 
     public function key(): int
     {
-        return $this->pageNum;
+        return $this->currentRow;
     }
 
     public function valid(): bool
     {
-        return ! $this->isLastPage();
+        return isset($this->result['entries'][$this->currentRelativeRow]) || !$this->isLastPage();
     }
 }

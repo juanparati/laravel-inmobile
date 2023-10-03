@@ -16,7 +16,7 @@ class InmobileProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../../config/inmobile.php' => config_path('inmobile.php'),
-        ]);
+        ], 'inmobile');
     }
 
     /**

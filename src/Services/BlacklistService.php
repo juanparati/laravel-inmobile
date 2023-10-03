@@ -17,7 +17,7 @@ class BlacklistService extends InmobileServiceBase
     public function all(int $limit = 250): ?PaginatedResults
     {
         $limit = $limit ?: 1;
-        $limit = $limit > 250 ? 250 : $limit;
+        $limit = min($limit, 250);
 
         return new PaginatedResults(
             $this->api,
