@@ -57,7 +57,7 @@ class RecipientService extends InmobileServiceBase
         string|int $phone
     ): ?Recipient {
         $model = $this->api->performRequest("lists/$listId/recipients/ByNumber", 'GET', [
-            'countryCode' => $code,
+            'countryCode' => PhoneCodeHelper::sanitize($code),
             'phoneNumber' => $phone,
         ]);
 
