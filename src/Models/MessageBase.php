@@ -7,10 +7,11 @@ use Illuminate\Contracts\Support\Arrayable;
 use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
+use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
 
 abstract class MessageBase implements Arrayable
 {
-    use HasCallableAttributes;
+    use HasCallableAttributes, HasSubmodels;
 
 
     /**
@@ -135,6 +136,6 @@ abstract class MessageBase implements Arrayable
      */
     public function toArray(): array
     {
-        return $this->model;
+        return static::recursiveToArray($this->model);
     }
 }

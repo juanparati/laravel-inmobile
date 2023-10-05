@@ -5,6 +5,7 @@ namespace Juanparati\Inmobile\Test\Unit;
 use Juanparati\Inmobile\Models\PaginatedResults;
 use Juanparati\Inmobile\Models\Recipient;
 
+
 class ListServiceTest extends InmobileTestBase
 {
     /**

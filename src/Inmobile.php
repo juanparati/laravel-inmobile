@@ -7,10 +7,13 @@ use Illuminate\Support\Str;
 use Juanparati\Inmobile\Exceptions\InmobileAuthorizationException;
 use Juanparati\Inmobile\Exceptions\InmobileRequestException;
 use Juanparati\Inmobile\Services\BlacklistService;
+use Juanparati\Inmobile\Services\EmailService;
+use Juanparati\Inmobile\Services\EmailTemplateService;
 use Juanparati\Inmobile\Services\GdprService;
 use Juanparati\Inmobile\Services\ListService;
 use Juanparati\Inmobile\Services\RecipientService;
 use Juanparati\Inmobile\Services\SmsService;
+use Juanparati\Inmobile\Services\TemplateService;
 use Juanparati\Inmobile\Services\ToolService;
 
 class Inmobile
@@ -53,6 +56,7 @@ class Inmobile
             'http_errors' => false,
             'auth' => Str::contains($config['api_key'], ':') ? explode(':', $config['api_key']) : ['', $config['api_key']],
         ]);
+
     }
 
     /**
@@ -158,6 +162,47 @@ class Inmobile
     public function tool(): ToolService
     {
         return new ToolService($this);
+    }
+
+    /**
+     * Provides e-mail service.
+     *
+     * @return EmailService
+     */
+    public function email() : EmailService
+    {
+        return new EmailService($this);
+    }
+
+    /**
+     * Provides SMS template service.
+     *
+     * @return TemplateService
+     */
+    public function templates() : TemplateService
+    {
+        return new TemplateService($this);
+    }
+
+
+    /**
+     * Provides Email template service.
+     *
+     * @return EmailTemplateService
+     */
+    public function emailTemplates(): EmailTemplateService
+    {
+        return new EmailTemplateService($this);
+    }
+
+    /**
+     * Provides the http client instance.
+     *
+     * @return Client
+     */
+    public function getHttpClient() : Client
+    {
+        return $this->client;
     }
 
     /**

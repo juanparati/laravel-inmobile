@@ -8,9 +8,12 @@ use Illuminate\Support\Arr;
 use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
 
 class Recipient implements Arrayable, PostModel
 {
+
+    use HasSubmodels;
 
     /**
      * Default model.
@@ -174,7 +177,7 @@ class Recipient implements Arrayable, PostModel
      */
     public function toArray(): array
     {
-        return $this->model;
+        return static::recursiveToArray($this->model);
     }
 
     /**
@@ -187,8 +190,6 @@ class Recipient implements Arrayable, PostModel
         Arr::forget($model, 'id');
         Arr::forget($model, 'listId');
         Arr::forget($model, 'created');
-
-        $model['externalCreated'] = $model['externalCreated']->format(Inmobile::DEFAULT_DATE_FORMAT);
 
         return $model;
     }

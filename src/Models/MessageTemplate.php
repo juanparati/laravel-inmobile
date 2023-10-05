@@ -71,9 +71,6 @@ class MessageTemplate extends MessageBase implements PostModel
      */
     public function asPostData(): array
     {
-        $model = $this->model;
-        $model['sendTime'] = $model['sendTime']->format(Inmobile::DEFAULT_DATE_FORMAT);
-
-        return $model;
+        return $this->toArray();
     }
 }

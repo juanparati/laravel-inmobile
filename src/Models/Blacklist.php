@@ -160,6 +160,7 @@ class Blacklist implements Arrayable, PostModel
         Arr::forget($model, 'reasonCode');
         Arr::forget($model, 'reasonCodeDescription');
         Arr::forget($model, 'created');
+        Arr::forget($model, 'id');
 
         return $model;
     }
