@@ -87,7 +87,7 @@ class ListService extends InmobileServiceBase
     public function update(string $listId, string $name)
     {
         return new RecipientList(
-            $this->api->performRequest('lists', 'PUT', RecipientList::make($name)->asPostData())
+            $this->api->performRequest("lists/$listId", 'PUT', RecipientList::make($name)->asPostData())
         );
     }
 

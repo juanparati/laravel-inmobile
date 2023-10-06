@@ -2,8 +2,10 @@
 
 namespace Juanparati\Inmobile\Test\Unit;
 
+use Illuminate\Support\Facades\Http;
 use Juanparati\Inmobile\Models\PaginatedResults;
 use Juanparati\Inmobile\Models\Recipient;
+use Juanparati\Inmobile\Models\RecipientList;
 
 
 class ListServiceTest extends InmobileTestBase
@@ -18,92 +20,127 @@ class ListServiceTest extends InmobileTestBase
      */
     public function testAllLists()
     {
+        $mockedLists = json_decode(static::loadMockedResponse('listsResponses.json'), true);
+        $mockedListsPaginated = array_chunk($mockedLists, 2);
+
+        Http::fakeSequence()
+            ->push(
+                static::loadMockedResponse('allListsResponse.json', [
+                        '{{LISTS}}' => json_encode($mockedListsPaginated[0]),
+                        '{{IS_LAST}}' => 'false',
+                    ]
+                ))
+            ->push(
+                static::loadMockedResponse('allListsResponse.json', [
+                        '{{LISTS}}' => json_encode($mockedListsPaginated[1]),
+                        '{{IS_LAST}}' => 'true',
+                    ]
+                ));
+
         $resp = $this->api()
             ->lists()
             ->all(2);
 
         $this->assertInstanceOf(PaginatedResults::class, $resp);
+
+        foreach ($resp as $k => $r) {
+            $this->assertEquals($mockedLists[$k], $r->toArray());
+        }
     }
 
     /**
-     * Test the entire the list lifecycle.
+     * Test retrieve a list.
      *
      * @return void
-     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testListLifecycle()
+    public function testList()
     {
+        $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true)[0];
 
-        $respCreate = $this->api()
+        Http::fake([
+            "lists/{$mockedList['id']}" => Http::response($mockedList),
+        ]);
+
+        $resp = $this->api()
             ->lists()
-            ->create('(UNIT TEST)');
+            ->find($mockedList['id']);
 
-        $this->assertNotNull($respCreate->getId());
-
-        $respList = $this->api()
-            ->lists()
-            ->find($respCreate->getId());
-
-        $this->assertEquals($respCreate->getName(), $respList->getName());
-
-        $respDelete = $this->api()
-            ->lists()
-            ->delete($respCreate->getId());
-
-        $this->assertEmpty($respDelete);
+        $this->assertInstanceOf(RecipientList::class, $resp);
+        $this->assertEquals($mockedList, $resp->toArray());
     }
 
+
     /**
-     * Test recipient creation.
+     * Test list creation.
      *
      * @return void
-     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testCreateRecipient()
-    {
-        $respList = $this->api()
+    public function testCreateList() {
+        $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true)[0];
+
+        Http::fake([
+            "lists" => Http::response($mockedList),
+        ]);
+
+        $resp = $this->api()
             ->lists()
-            ->create('(UNIT TEST REC)');
+            ->create($mockedList['name']);
 
-        $this->assertNotNull($respList->getId());
+        $this->assertInstanceOf(RecipientList::class, $resp);
+        $this->assertEquals($mockedList, $resp->toArray());
+    }
 
-        $respRecipient = $this->api()
-            ->recipients()
-            ->create(
-                $respList->getId(),
-                Recipient::make('45', '12345678')
-                    ->addField('firstname', 'John')
-                    ->addField('lastname', 'Random')
-                    ->addField('custom1', 'custom')
-                    ->setCreatedAt(now()->subDay())
-            );
 
-        $this->assertNotNull($respRecipient->getId());
+    /**
+     * Test
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     */
+    public function testDeleteList() {
+        $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true)[0];
 
-        $respRecipient = $this->api()
-            ->recipients()
-            ->updateOrCreateByNumber(
-                $respList->getId(),
-                $respRecipient->getCode(),
-                $respRecipient->getPhone(),
-                Recipient::make('45', '12345679')
-                    ->addField('firstname', 'John2')
-                    ->addField('lastname', 'Random')
-                    ->addField('custom1', 'custom')
-            );
+        Http::fake([
+            "lists/{$mockedList['id']}" => Http::response('', 204),
+        ]);
 
-        $this->assertNotNull($respRecipient->getId());
-        $this->assertEquals('12345679', $respRecipient->getPhone());
-        $this->assertEquals('John2', $respRecipient->getField('firstname'));
-
-        $this->api()
+        $resp = $this->api()
             ->lists()
-            ->delete($respList->getId());
+            ->delete($mockedList['id']);
+
+        $this->assertEmpty($resp);
+    }
+
+
+    /**
+     * Test update list.
+     *
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     */
+    public function testUpdateList() {
+        $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true);
+        $mockedResponse = $mockedList[0];
+        $mockedResponse['name'] = $mockedList[1]['name'];
+
+        Http::fake([
+            "lists/{$mockedResponse['id']}" => Http::response($mockedResponse),
+        ]);
+
+        $resp = $this->api()
+            ->lists()
+            ->update($mockedResponse['id'], $mockedResponse['name']);
+
+        $this->assertInstanceOf(RecipientList::class, $resp);
+        $this->assertEquals($mockedResponse['name'], $resp->getName());
     }
 }

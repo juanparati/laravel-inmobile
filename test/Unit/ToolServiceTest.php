@@ -2,6 +2,7 @@
 
 namespace Juanparati\Inmobile\Test\Unit;
 
+use Illuminate\Support\Facades\Http;
 use Juanparati\Inmobile\Models\PhoneParse;
 
 class ToolServiceTest extends InmobileTestBase
@@ -17,11 +18,19 @@ class ToolServiceTest extends InmobileTestBase
      */
     public function testParseNumber()
     {
+        $mockedResponse = json_decode(static::loadMockedResponse('parsedPhoneResponse.json'), true);
+        $code = $mockedResponse['results'][0]['countryCode'];
+        $phone = $mockedResponse['results'][0]['phoneNumber'];
+
+        Http::fake([
+            "tools/parsephonenumbers" => Http::response($mockedResponse),
+        ]);
+
         $resp = $this->api()
             ->tool()
-            ->phoneParse([PhoneParse::make('+45', '+45 12345678')]);
+            ->phoneParse([PhoneParse::make('+' . $code, "+$code $phone")]);
 
         $this->assertNotEmpty($resp);
-        $this->assertEquals('4512345678', $resp[0]->getMsisdn());
+        $this->assertEquals($mockedResponse['results'][0]['msisdn'], $resp[0]->getMsisdn());
     }
 }

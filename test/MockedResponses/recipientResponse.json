@@ -1,0 +1,25 @@
+{
+  "externalCreated": "2001-02-14T14:50:23Z",
+  "numberInfo": {
+    "countryCode": "45",
+    "phoneNumber": "12345678"
+  },
+  "fields": {
+    "firstname": "Friedhelm",
+    "lastname": "Hillebrand",
+    "birthday": "1945-04-30",
+    "custom1": "Custom1",
+    "custom2": "Custom2",
+    "custom3": "Custom3",
+    "custom4": "Custom4",
+    "custom5": "Custom5",
+    "custom6": "Custom6",
+    "email": "test@test.dk",
+    "zipCode": "8000",
+    "address": "testroad 12",
+    "companyName": "test company"
+  },
+  "id": "99e0543f-b059-4127-9b50-c42112f19cc9",
+  "listId": "4a5f91d5-3aa4-4419-890e-f7b103406dbf",
+  "created": "2001-02-30T14:50:23Z"
+}

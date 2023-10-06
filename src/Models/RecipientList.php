@@ -6,9 +6,12 @@ use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
 
 class RecipientList implements Arrayable, PostModel
 {
+
+    use HasSubmodels;
 
     /**
      * Default model.
@@ -81,7 +84,7 @@ class RecipientList implements Arrayable, PostModel
      */
     public function toArray()
     {
-        return $this->model;
+        return static::recursiveToArray($this->model);
     }
 
     /**

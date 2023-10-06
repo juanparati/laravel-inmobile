@@ -2,6 +2,8 @@
 
 namespace Juanparati\Inmobile\Test\Unit;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use Juanparati\Inmobile\Facades\InmobileFacade;
 use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Providers\InmobileProvider;
@@ -35,11 +37,53 @@ abstract class InmobileTestBase extends TestCase
         ];
     }
 
+
+    /**
+     * Clear fakes before each test.
+     *
+     * @return void
+     * @throws \ReflectionException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        static::clearExistingFakes();
+    }
+
     /**
      * Provide Inmobile API client.
      */
     protected function api(): Inmobile
     {
         return $this->app->make(Inmobile::class);
+    }
+
+
+    /**
+     * Clear fakes.
+     *
+     * @return void
+     * @throws \ReflectionException
+     */
+    protected static function clearExistingFakes(): void {
+        $realHttp = app(\Illuminate\Http\Client\Factory::class);
+        Http::swap($realHttp);
+    }
+
+    /**
+     * Generated a mocked content.
+     *
+     * @param string $response
+     * @param array $placeholders
+     * @return string
+     */
+    protected static function loadMockedResponse(string $response, array $placeholders = []) : string {
+        $mockContent = file_get_contents(__DIR__ . '/../MockedResponses/' . $response);
+
+        foreach ($placeholders as $k => $value) {
+            $mockContent = str_replace('"' . $k . '"', $value, $mockContent);
+        }
+
+        return $mockContent;
     }
 }

@@ -25,6 +25,8 @@ trait HasSubmodels
                 $arr[$key] = $attr->format(Inmobile::DEFAULT_DATE_FORMAT);
             elseif (is_array($attr))
                 $arr[$key] = static::recursiveToArray($attr);
+            elseif (is_null($attr))
+                $arr[$key] = null;
             elseif(enum_exists($attr))
                 $arr[$key] = $attr->value;
             else

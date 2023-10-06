@@ -1,0 +1,22 @@
+[
+  {
+    "id": "f8af5cc3-2f8b-4936-833d-72951edbe46a",
+    "name": "(TEST) List 1",
+    "created": "2023-09-20T11:43:08Z"
+  },
+  {
+    "id": "a2e96756-40ba-4f7c-b119-b56a94043e3a",
+    "name": "(TEST) List 2",
+    "created": "2023-09-21T08:55:19Z"
+  },
+  {
+    "id": "76a393a7-23e0-4ded-a8e5-c0f004e34503",
+    "name": "(TEST) List 3",
+    "created": "2023-09-28T06:18:17Z"
+  },
+  {
+    "id": "a3c6a110-3f0e-4585-8762-889697bba385",
+    "name": "(TEST) List 4",
+    "created": "2023-09-28T06:18:26Z"
+  }
+]

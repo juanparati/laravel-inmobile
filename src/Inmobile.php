@@ -2,7 +2,8 @@
 
 namespace Juanparati\Inmobile;
 
-use GuzzleHttp\Client;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Juanparati\Inmobile\Exceptions\InmobileAuthorizationException;
 use Juanparati\Inmobile\Exceptions\InmobileRequestException;
@@ -33,12 +34,20 @@ class Inmobile
     /**
      * Guzzle Http client instance.
      */
-    protected Client $client;
+    //protected Client $client;
+    protected PendingRequest $client;
 
     /**
      * API version.
      */
-    protected string $version;
+    protected readonly string $version;
+
+    /**
+     * Base URI.
+     *
+     * @var string
+     */
+    protected readonly string $baseUri;
 
     /**
      * Constructor.
@@ -47,16 +56,13 @@ class Inmobile
     {
         $baseUri = $config['base_url'] ?? 'https://api.inmobile.com/';
         $this->version = strtolower($config['version'] ?? 'v4');
+        $this->baseUri = Str::finish($baseUri, '/').Str::finish($this->version, '/');
 
-        $baseUri = Str::finish($baseUri, '/').Str::finish($this->version, '/');
+        [$username, $key] = Str::contains($config['api_key'], ':') ? explode(':', $config['api_key']) : ['', $config['api_key']];
 
-        $this->client = new Client([
-            'base_uri' => $baseUri,
-            'timeout' => $config['timeout'] ?? 30,
-            'http_errors' => false,
-            'auth' => Str::contains($config['api_key'], ':') ? explode(':', $config['api_key']) : ['', $config['api_key']],
-        ]);
-
+        $this->client = Http::baseUrl($this->baseUri)
+            ->timeout($config['timeout'] ?? 30)
+            ->withBasicAuth($username, $key);
     }
 
     /**
@@ -68,18 +74,19 @@ class Inmobile
      */
     public function performRequest(string $endpoint, string $method, array $data = []): ?array
     {
-        $response = $this->client->request(
-            $method,
-            $endpoint,
-            in_array($method, ['GET', 'DELETE']) ? ['query' => $data] : ['json' => $data]
-        );
+        $response = $this->getHttpClient()
+            ->send(
+                $method,
+                $endpoint,
+                in_array($method, ['GET', 'DELETE']) ? ['query' => $data] : ['json' => $data]
+            );
 
-        $statusCode = $response->getStatusCode();
+        $statusCode = $response->status();
 
         $message = [];
 
-        if (! empty(trim($response->getBody()))) {
-            $message = json_decode($response->getBody(), true);
+        if (!empty(trim($response->body()))) {
+            $message = $response->json();
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new InmobileRequestException(
@@ -198,9 +205,9 @@ class Inmobile
     /**
      * Provides the http client instance.
      *
-     * @return Client
+     * @return PendingRequest
      */
-    public function getHttpClient() : Client
+    public function getHttpClient() : PendingRequest
     {
         return $this->client;
     }
@@ -211,5 +218,15 @@ class Inmobile
     public function getVersion(): string
     {
         return $this->version;
+    }
+
+    /**
+     * Retrieve base URI.
+     *
+     * @return string
+     */
+    public function getBaseUri() : string
+    {
+        return $this->baseUri;
     }
 }
