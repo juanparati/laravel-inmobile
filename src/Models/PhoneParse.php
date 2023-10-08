@@ -77,7 +77,7 @@ class PhoneParse implements Arrayable, PostModel
      */
     public function setRawMsisdn(string|int $rawMsisdn): static
     {
-        $this->model['rawMsisdn'] = (string)$rawMsisdn;
+        $this->model['rawMsisdn'] = (string) $rawMsisdn;
 
         return $this;
     }

@@ -2,7 +2,6 @@
 
 namespace Juanparati\Inmobile\Test\Unit;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Juanparati\Inmobile\Facades\InmobileFacade;
 use Juanparati\Inmobile\Inmobile;
@@ -37,11 +36,9 @@ abstract class InmobileTestBase extends TestCase
         ];
     }
 
-
     /**
      * Clear fakes before each test.
      *
-     * @return void
      * @throws \ReflectionException
      */
     protected function setUp(): void
@@ -58,30 +55,26 @@ abstract class InmobileTestBase extends TestCase
         return $this->app->make(Inmobile::class);
     }
 
-
     /**
      * Clear fakes.
      *
-     * @return void
      * @throws \ReflectionException
      */
-    protected static function clearExistingFakes(): void {
+    protected static function clearExistingFakes(): void
+    {
         $realHttp = app(\Illuminate\Http\Client\Factory::class);
         Http::swap($realHttp);
     }
 
     /**
      * Generated a mocked content.
-     *
-     * @param string $response
-     * @param array $placeholders
-     * @return string
      */
-    protected static function loadMockedResponse(string $response, array $placeholders = []) : string {
-        $mockContent = file_get_contents(__DIR__ . '/../MockedResponses/' . $response);
+    protected static function loadMockedResponse(string $response, array $placeholders = []): string
+    {
+        $mockContent = file_get_contents(__DIR__.'/../MockedResponses/'.$response);
 
         foreach ($placeholders as $k => $value) {
-            $mockContent = str_replace('"' . $k . '"', $value, $mockContent);
+            $mockContent = str_replace('"'.$k.'"', $value, $mockContent);
         }
 
         return $mockContent;

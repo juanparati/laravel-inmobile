@@ -5,7 +5,6 @@ namespace Juanparati\Inmobile\Models;
 use Carbon\CarbonInterface;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
-
 /**
  * Model for e-mail messages.
  *
@@ -21,11 +20,8 @@ use Juanparati\Inmobile\Models\Contracts\PostModel;
  */
 class EmailMessage extends EmailMessageBase implements PostModel
 {
-
     /**
      * Default model.
-     *
-     * @var array
      */
     protected array $model = [
         'from'      => null,
@@ -39,14 +35,9 @@ class EmailMessage extends EmailMessageBase implements PostModel
         'text'      => null,
     ];
 
-
     /**
      * Factory method.
      *
-     * @param EmailRecipient $from
-     * @param array $to
-     * @param string $subject
-     * @param string $html
      * @return $this
      */
     public static function make(EmailRecipient $from, array $to, string $subject, string $html): static
@@ -55,7 +46,7 @@ class EmailMessage extends EmailMessageBase implements PostModel
             'from'    => $from,
             'to'      => $to,
             'subject' => $subject,
-            'html'    => $html
+            'html'    => $html,
         ]);
     }
 }

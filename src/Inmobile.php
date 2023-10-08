@@ -19,7 +19,6 @@ use Juanparati\Inmobile\Services\ToolService;
 
 class Inmobile
 {
-
     /**
      * Default timezone used by inMobile dates.
      */
@@ -29,7 +28,6 @@ class Inmobile
      * Default format used by inMobile dates.
      */
     const DEFAULT_DATE_FORMAT = 'Y-m-d\TH:i:s\Z';
-
 
     /**
      * Guzzle Http client instance.
@@ -44,8 +42,6 @@ class Inmobile
 
     /**
      * Base URI.
-     *
-     * @var string
      */
     protected readonly string $baseUri;
 
@@ -54,7 +50,7 @@ class Inmobile
      */
     public function __construct(array $config = [])
     {
-        $baseUri = $config['base_url'] ?? 'https://api.inmobile.com/';
+        $baseUri       = $config['base_url'] ?? 'https://api.inmobile.com/';
         $this->version = strtolower($config['version'] ?? 'v4');
         $this->baseUri = Str::finish($baseUri, '/').Str::finish($this->version, '/');
 
@@ -85,7 +81,7 @@ class Inmobile
 
         $message = [];
 
-        if (!empty(trim($response->body()))) {
+        if (! empty(trim($response->body()))) {
             $message = $response->json();
 
             if (json_last_error() !== JSON_ERROR_NONE) {
@@ -104,10 +100,8 @@ class Inmobile
             case 500:
             case 400:
                 throw new InmobileRequestException($response->getBody(), $statusCode);
-
             case 401:
                 throw new InmobileAuthorizationException($response->getBody(), $statusCode);
-
             case 404:
                 if (! empty($message['errorMessage']) && Str::contains($message['errorMessage'], 'invalid resource', true)) {
                     throw new InmobileRequestException($response->getBody(), $statusCode);
@@ -131,8 +125,6 @@ class Inmobile
 
     /**
      * Provide the recipients service.
-     *
-     * @return RecipientService
      */
     public function recipients(): RecipientService
     {
@@ -173,29 +165,22 @@ class Inmobile
 
     /**
      * Provides e-mail service.
-     *
-     * @return EmailService
      */
-    public function email() : EmailService
+    public function email(): EmailService
     {
         return new EmailService($this);
     }
 
     /**
      * Provides SMS template service.
-     *
-     * @return TemplateService
      */
-    public function templates() : TemplateService
+    public function templates(): TemplateService
     {
         return new TemplateService($this);
     }
 
-
     /**
      * Provides Email template service.
-     *
-     * @return EmailTemplateService
      */
     public function emailTemplates(): EmailTemplateService
     {
@@ -204,10 +189,8 @@ class Inmobile
 
     /**
      * Provides the http client instance.
-     *
-     * @return PendingRequest
      */
-    public function getHttpClient() : PendingRequest
+    public function getHttpClient(): PendingRequest
     {
         return $this->client;
     }
@@ -222,10 +205,8 @@ class Inmobile
 
     /**
      * Retrieve base URI.
-     *
-     * @return string
      */
-    public function getBaseUri() : string
+    public function getBaseUri(): string
     {
         return $this->baseUri;
     }

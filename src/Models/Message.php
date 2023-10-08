@@ -3,7 +3,6 @@
 namespace Juanparati\Inmobile\Models;
 
 use Juanparati\Inmobile\Enums\Encoding;
-use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 /**
@@ -43,20 +42,19 @@ class Message extends MessageBase implements PostModel
     /**
      * Factory method.
      *
-     * @param string|int $code Destination country code
-     * @param string|int $phone Destination phone (without country code)
-     * @param string|int $from Sender
-     * @param string $text Message
+     * @param  string|int  $code Destination country code
+     * @param  string|int  $phone Destination phone (without country code)
+     * @param  string|int  $from Sender
+     * @param  string  $text Message
      */
     public static function make(
         string|int $code,
         string|int $phone,
         string|int $from,
-        string     $text
-    ): static
-    {
+        string $text
+    ): static {
         return new static([
-            'to'          => $code . $phone,
+            'to'          => $code.$phone,
             'countryHint' => $code,
             'from'        => $from,
             'text'        => $text,

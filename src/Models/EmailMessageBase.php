@@ -21,13 +21,10 @@ use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
  */
 abstract class EmailMessageBase implements Arrayable, PostModel
 {
-
-    use HasSubmodels, HasCallableAttributes;
+    use HasCallableAttributes, HasSubmodels;
 
     /**
      * Default model.
-     *
-     * @var array
      */
     protected array $model = [
         'from'      => null,
@@ -38,14 +35,13 @@ abstract class EmailMessageBase implements Arrayable, PostModel
         'tracking'  => false,
     ];
 
-
     /**
      * Constructor.
      *
-     * @param array $model
      * @return void
      */
-    public function __construct(array $model = []) {
+    public function __construct(array $model = [])
+    {
         $this->model = array_merge($this->model, $model);
         $this->setSendTime($this->model['sendTime'] ?: now());
         $this->setFrom($this->model['from'] ?: null);
@@ -53,14 +49,13 @@ abstract class EmailMessageBase implements Arrayable, PostModel
         $this->setReplyTo($this->model['replyTo'] ?: []);
     }
 
-
     /**
      * Set send time.
      *
-     * @param CarbonInterface|string|\DateTime $sendTime
      * @return $this
      */
-    public function setSendTime(CarbonInterface|string|\DateTime $sendTime): static {
+    public function setSendTime(CarbonInterface|string|\DateTime $sendTime): static
+    {
         $this->model['sendTime'] = now()
             ->parse($sendTime)
             ->setTimezone(Inmobile::DEFAULT_TIMEZONE)
@@ -69,46 +64,50 @@ abstract class EmailMessageBase implements Arrayable, PostModel
         return $this;
     }
 
-
     /**
      * Set from.
      *
-     * @param EmailRecipient $recipient
+     * @param  EmailRecipient  $recipient
      * @return $this
      */
-    public function setFrom(EmailRecipient|array $recipient):static {
-        if (is_array($recipient))
+    public function setFrom(EmailRecipient|array $recipient): static
+    {
+        if (is_array($recipient)) {
             $recipient = EmailRecipient::make($recipient['emailAddress'], $recipient['displayName']);
+        }
 
         $this->model['from'] = $recipient;
+
         return $this;
     }
-
 
     /**
      * Add recipient to destination.
      *
-     * @param EmailRecipient $recipient
      * @return $this
      */
-    public function addTo(EmailRecipient $recipient):static {
+    public function addTo(EmailRecipient $recipient): static
+    {
         $this->model['to'][] = $recipient;
+
         return $this;
     }
 
     /**
      * Set destination.
      *
-     * @param EmailRecipient[] $recipients
+     * @param  EmailRecipient[]  $recipients
      * @return $this
      */
-    public function setTo(array $recipients):static {
+    public function setTo(array $recipients): static
+    {
 
         $this->model['to'] = [];
 
         foreach ($recipients as $recipient) {
-            if (is_array($recipient))
+            if (is_array($recipient)) {
                 $recipient = EmailRecipient::make($recipient['emailAddress'], $recipient['displayName']);
+            }
 
             $this->addTo($recipient);
         }
@@ -116,30 +115,31 @@ abstract class EmailMessageBase implements Arrayable, PostModel
         return $this;
     }
 
-
     /**
      * Add reply to.
      *
-     * @param EmailRecipient $recipient
      * @return $this
      */
-    public function addReplyTo(EmailRecipient $recipient):static {
+    public function addReplyTo(EmailRecipient $recipient): static
+    {
         $this->model['replyTo'][] = $recipient;
+
         return $this;
     }
 
     /**
      * Set reply to.
      *
-     * @param array $recipients
      * @return $this'
      */
-    public function setReplyTo(array $recipients):static {
+    public function setReplyTo(array $recipients): static
+    {
         $this->model['replyTo'] = [];
 
         foreach ($recipients as $recipient) {
-            if (is_array($recipient))
+            if (is_array($recipient)) {
                 $recipient = EmailRecipient::make($recipient['emailAddress'], $recipient['displayName']);
+            }
 
             $this->addReplyTo($recipient);
         }
@@ -147,23 +147,20 @@ abstract class EmailMessageBase implements Arrayable, PostModel
         return $this;
     }
 
-
     /**
      * Set tracking state.
      *
-     * @param bool $state
      * @return $this
      */
-    public function setTracking(bool $state): static {
+    public function setTracking(bool $state): static
+    {
         $this->model['tracking'] = $state;
+
         return $this;
     }
 
-
     /**
      * Retrieve model as array.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -172,8 +169,6 @@ abstract class EmailMessageBase implements Arrayable, PostModel
 
     /**
      * Retrieve for post request.
-     *
-     * @return array
      */
     public function asPostData(): array
     {

@@ -9,5 +9,7 @@ abstract class InmobileServiceBase implements InmobileService
     /**
      * Constructor.
      */
-    public function __construct(protected Inmobile $api) {}
+    public function __construct(protected Inmobile $api)
+    {
+    }
 }

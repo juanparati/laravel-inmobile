@@ -17,8 +17,6 @@ class EmailTemplate extends Template
 {
     /**
      * Default model.
-     *
-     * @var array
      */
     protected array $model = [
         'id'           => null,
@@ -29,6 +27,6 @@ class EmailTemplate extends Template
         'preheader'    => null,
         'placeholders' => [],
         'created'      => null,
-        'lastUpdated'  => null
+        'lastUpdated'  => null,
     ];
 }

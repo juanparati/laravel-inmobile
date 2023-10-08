@@ -24,8 +24,6 @@ class EmailMessageTemplate extends EmailMessageBase implements PostModel
 
     /**
      * Default model.
-     *
-     * @var array
      */
     protected array $model = [
         'from'         => null,
@@ -38,13 +36,9 @@ class EmailMessageTemplate extends EmailMessageBase implements PostModel
         'placeholders' => [],
     ];
 
-
     /**
      * Factory method.
      *
-     * @param EmailRecipient $from
-     * @param array $to
-     * @param string $templateId
      * @return $this
      */
     public static function make(EmailRecipient $from, array $to, string $templateId): static
@@ -56,28 +50,27 @@ class EmailMessageTemplate extends EmailMessageBase implements PostModel
         ]);
     }
 
-
     /**
      * Add placeholder.
      *
-     * @param string $key
-     * @param string|int|float $value
      * @return $this
      */
-    public function addPlaceholder(string $key, string|int|float $value) : static {
+    public function addPlaceholder(string $key, string|int|float $value): static
+    {
         $this->model['placeholders'][] = [$key, $value];
+
         return $this;
     }
-
 
     /**
      * Set placeholder.
      *
-     * @param array $placeholders
      * @return $this
      */
-    public function setPlaceholders(array $placeholders): static {
+    public function setPlaceholders(array $placeholders): static
+    {
         $this->model['placeholders'] = $placeholders;
+
         return $this;
     }
 }

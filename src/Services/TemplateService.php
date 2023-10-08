@@ -7,17 +7,15 @@ use Juanparati\Inmobile\Models\Template;
 
 class TemplateService extends InmobileServiceBase
 {
-
     /**
      * Obtain all SMS templates.
      *
-     * @param int $limit
-     * @return PaginatedResults|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function all(int $limit = 250): ?PaginatedResults {
+    public function all(int $limit = 250): ?PaginatedResults
+    {
         $limit = $limit ?: 1;
         $limit = min($limit, 250);
 
@@ -28,18 +26,17 @@ class TemplateService extends InmobileServiceBase
         );
     }
 
-
     /**
      * Obtain a specific template.
      *
-     * @param string $id
-     * @return Template|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function find(string $id): ?Template {
+    public function find(string $id): ?Template
+    {
         $model = $this->api->performRequest("sms/templates/$id", 'GET');
+
         return $model ? new Template($model) : null;
     }
 

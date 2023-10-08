@@ -1,0 +1,21 @@
+{
+	"preset": "laravel",
+	"rules": {
+		"binary_operator_spaces": {
+			"operators": {
+				"=>": "align",
+                "=": "align_single_space"
+			}
+		},
+		"class_attributes_separation": {
+			"elements": {
+				"const": "only_if_meta"
+			}
+		},
+        "not_operator_with_space": false
+	},
+	"exclude": [
+		"database/migrations",
+		"bootstrap"
+	]
+}

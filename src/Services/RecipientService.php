@@ -7,7 +7,6 @@ use Juanparati\Inmobile\Models\Recipient;
 
 class RecipientService extends InmobileServiceBase
 {
-
     /**
      * Create recipient.
      *
@@ -24,7 +23,6 @@ class RecipientService extends InmobileServiceBase
 
         return $model ? new Recipient($model) : null;
     }
-
 
     /**
      * Get recipient by Id.
@@ -43,10 +41,6 @@ class RecipientService extends InmobileServiceBase
     /**
      * Get recipient by number.
      *
-     * @param string $listId
-     * @param string|int $code
-     * @param string|int $phone
-     * @return Recipient|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
@@ -100,10 +94,8 @@ class RecipientService extends InmobileServiceBase
     /**
      * Delete recipient by number.
      *
-     * @param string $listId
-     * @param string|int $code
-     * @param string|int $phone
      * @return array|null
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
@@ -119,15 +111,9 @@ class RecipientService extends InmobileServiceBase
         ]);
     }
 
-
     /**
      * Update or create recipient by number.
      *
-     * @param string $listId
-     * @param string|int $code
-     * @param string|int $phone
-     * @param Recipient $recipient
-     * @return Recipient
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
@@ -141,7 +127,7 @@ class RecipientService extends InmobileServiceBase
         return new Recipient(
             $this->api->performRequest(
                 sprintf(
-                    "lists/%s/recipients/ByNumber?countryCode=%s&phoneNumber=%s",
+                    'lists/%s/recipients/ByNumber?countryCode=%s&phoneNumber=%s',
                     $listId,
                     PhoneCodeHelper::sanitize($code),
                     $phone
@@ -152,14 +138,9 @@ class RecipientService extends InmobileServiceBase
         );
     }
 
-
     /**
      * Move recipient from list to another.
      *
-     * @param string $srcListId
-     * @param string $dstListId
-     * @param string $id
-     * @return Recipient|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
@@ -168,7 +149,7 @@ class RecipientService extends InmobileServiceBase
     {
         $rcpSrc = $this->findById($srcListId, $id);
 
-        if (!$rcpSrc) {
+        if (! $rcpSrc) {
             return null;
         }
 

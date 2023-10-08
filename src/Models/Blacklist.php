@@ -10,7 +10,6 @@ use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 class Blacklist implements Arrayable, PostModel
 {
-
     /**
      * Default model.
      */
@@ -50,8 +49,8 @@ class Blacklist implements Arrayable, PostModel
     {
         return new static([
             'numberInfo'         => [
-                'countryCode' => (string)$code,
-                'phoneNumber' => (string)$phone,
+                'countryCode' => (string) $code,
+                'phoneNumber' => (string) $phone,
             ],
             'removeFromAllLists' => $removeFromAllLists,
         ]);
@@ -76,7 +75,7 @@ class Blacklist implements Arrayable, PostModel
      */
     public function setPhone(string|int $phone): static
     {
-        $this->model['numberInfo']['phoneNumber'] = (string)$phone;
+        $this->model['numberInfo']['phoneNumber'] = (string) $phone;
 
         return $this;
     }

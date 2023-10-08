@@ -2,7 +2,6 @@
 
 namespace Juanparati\Inmobile\Models;
 
-use Juanparati\Inmobile\Inmobile;
 use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 /**
@@ -35,20 +34,14 @@ class MessageTemplate extends MessageBase implements PostModel
 
     /**
      * Factory method.
-     *
-     * @param string|int $code
-     * @param string|int $phone
-     * @param string|int $from
-     * @return static
      */
     public static function make(
         string|int $code,
         string|int $phone,
         string|int $from,
-    ): static
-    {
+    ): static {
         return new static([
-            'to'          => $code . $phone,
+            'to'          => $code.$phone,
             'countryHint' => $code,
             'from'        => $from,
         ]);

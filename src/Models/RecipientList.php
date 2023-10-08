@@ -10,7 +10,6 @@ use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
 
 class RecipientList implements Arrayable, PostModel
 {
-
     use HasSubmodels;
 
     /**
@@ -27,7 +26,7 @@ class RecipientList implements Arrayable, PostModel
      */
     public function __construct(array $model = [])
     {
-        $this->model = array_merge($this->model, $model);
+        $this->model            = array_merge($this->model, $model);
         $this->model['created'] = $this->model['created']
             ? now()->parse($this->model['created'])->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable()
             : now()->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable();

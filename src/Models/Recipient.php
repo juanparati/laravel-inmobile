@@ -12,7 +12,6 @@ use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
 
 class Recipient implements Arrayable, PostModel
 {
-
     use HasSubmodels;
 
     /**
@@ -65,8 +64,8 @@ class Recipient implements Arrayable, PostModel
     {
         return new static([
             'numberInfo' => [
-                'countryCode' => (string)$code,
-                'phoneNumber' => (string)$phone,
+                'countryCode' => (string) $code,
+                'phoneNumber' => (string) $phone,
             ],
         ]);
     }
@@ -90,7 +89,7 @@ class Recipient implements Arrayable, PostModel
      */
     public function setPhone(string|int $phone): static
     {
-        $this->model['numberInfo']['phoneNumber'] = (string)$phone;
+        $this->model['numberInfo']['phoneNumber'] = (string) $phone;
 
         return $this;
     }
@@ -118,11 +117,11 @@ class Recipient implements Arrayable, PostModel
      */
     public function addField(string $field, string|int|float $value): static
     {
-        if (!array_key_exists($field, $this->model['fields'])) {
+        if (! array_key_exists($field, $this->model['fields'])) {
             throw new \RuntimeException("$field is not allowed");
         }
 
-        $this->model['fields'][$field] = (string)$value;
+        $this->model['fields'][$field] = (string) $value;
 
         return $this;
     }

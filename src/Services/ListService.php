@@ -63,8 +63,6 @@ class ListService extends InmobileServiceBase
     /**
      * Delete lists.
      *
-     * @param string $listId
-     * @return array|null
      *
      * @throws GuzzleException
      * @throws InmobileAuthorizationException
@@ -109,7 +107,6 @@ class ListService extends InmobileServiceBase
             Recipient::class
         );
     }
-
 
     /**
      * Delete all recipients from a list.

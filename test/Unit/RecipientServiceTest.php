@@ -7,21 +7,22 @@ use Juanparati\Inmobile\Models\Recipient;
 
 class RecipientServiceTest extends InmobileTestBase
 {
-
     /**
      * Test recipient creation.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testCreateRecipient() {
+    public function testCreateRecipient()
+    {
 
         $mockedResponse = json_decode(static::loadMockedResponse('recipientResponse.json'), true);
 
         Http::fake([
-            "lists/{$mockedResponse['listId']}/recipients" => Http::response($mockedResponse)
+            "lists/{$mockedResponse['listId']}/recipients" => Http::response($mockedResponse),
         ]);
 
         $resp = $this->api()
@@ -32,20 +33,21 @@ class RecipientServiceTest extends InmobileTestBase
         $this->assertEquals($mockedResponse, $resp->toArray());
     }
 
-
     /**
      * Test find recipient by Id.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testFindById() {
+    public function testFindById()
+    {
         $mockedResponse = json_decode(static::loadMockedResponse('recipientResponse.json'), true);
 
         Http::fake([
-            "lists/{$mockedResponse['listId']}/recipients/{$mockedResponse['id']}" => Http::response($mockedResponse)
+            "lists/{$mockedResponse['listId']}/recipients/{$mockedResponse['id']}" => Http::response($mockedResponse),
         ]);
 
         $resp = $this->api()
@@ -56,20 +58,21 @@ class RecipientServiceTest extends InmobileTestBase
         $this->assertEquals($mockedResponse, $resp->toArray());
     }
 
-
     /**
      * Test find recipient by number.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testFindByNumber() {
+    public function testFindByNumber()
+    {
         $mockedResponse = json_decode(static::loadMockedResponse('recipientResponse.json'), true);
 
         Http::fake([
-            "lists/{$mockedResponse['listId']}/recipients/ByNumber?countryCode={$mockedResponse['numberInfo']['countryCode']}&phoneNumber={$mockedResponse['numberInfo']['phoneNumber']}" => Http::response($mockedResponse)
+            "lists/{$mockedResponse['listId']}/recipients/ByNumber?countryCode={$mockedResponse['numberInfo']['countryCode']}&phoneNumber={$mockedResponse['numberInfo']['phoneNumber']}" => Http::response($mockedResponse),
         ]);
 
         $resp = $this->api()

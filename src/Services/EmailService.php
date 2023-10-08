@@ -8,17 +8,15 @@ use Juanparati\Inmobile\Models\EmailResponse;
 
 class EmailService extends InmobileServiceBase
 {
-
     /**
      * Send an email.
      *
-     * @param EmailMessage $message
-     * @return EmailResponse|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function send(EmailMessage $message) : ?EmailResponse {
+    public function send(EmailMessage $message): ?EmailResponse
+    {
         $model = $this->api
             ->performRequest('email/outgoing', 'POST', $message->asPostData());
 
@@ -28,20 +26,16 @@ class EmailService extends InmobileServiceBase
     /**
      * Send e-mail template.
      *
-     * @param EmailMessageTemplate $message
-     * @return EmailResponse|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function sendTemplate(EmailMessageTemplate $message): ?EmailResponse {
+    public function sendTemplate(EmailMessageTemplate $message): ?EmailResponse
+    {
         $model = $this->api
             ->performRequest('email/outgoing/sendusingtemplate', 'POST', $message->asPostData());
 
         return $model ? new EmailResponse($model) : null;
     }
-
-
-
 
 }

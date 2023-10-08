@@ -12,9 +12,6 @@ class GdprService extends InmobileServiceBase
     /**
      * Create deletion requests.
      *
-     * @param string|int $code
-     * @param string|int $phone
-     * @return array|null
      *
      * @throws GuzzleException
      * @throws InmobileAuthorizationException

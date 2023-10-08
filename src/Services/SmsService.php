@@ -32,7 +32,7 @@ class SmsService extends InmobileServiceBase
     {
         return $this->api->performRequest('sms/outgoing/sendusingtemplate', 'POST', [
             'templateId' => $templateId,
-            'messages' => array_map(fn (MessageTemplate $r) => $r->asPostData(), $messages),
+            'messages'   => array_map(fn (MessageTemplate $r) => $r->asPostData(), $messages),
         ]);
     }
 

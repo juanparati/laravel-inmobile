@@ -8,29 +8,27 @@ use Juanparati\Inmobile\Inmobile;
 
 trait HasSubmodels
 {
-
     /**
      * Convert array into a model in recursive way.
-     *
-     * @param array $model
-     * @return array
      */
-    protected static function recursiveToArray(array $model) : array {
+    protected static function recursiveToArray(array $model): array
+    {
         $arr = [];
 
         foreach ($model as $key => $attr) {
-            if ($attr instanceof Arrayable)
+            if ($attr instanceof Arrayable) {
                 $arr[$key] = $attr->toArray();
-            elseif ($attr instanceof CarbonInterface)
+            } elseif ($attr instanceof CarbonInterface) {
                 $arr[$key] = $attr->format(Inmobile::DEFAULT_DATE_FORMAT);
-            elseif (is_array($attr))
+            } elseif (is_array($attr)) {
                 $arr[$key] = static::recursiveToArray($attr);
-            elseif (is_null($attr))
+            } elseif (is_null($attr)) {
                 $arr[$key] = null;
-            elseif(enum_exists($attr))
+            } elseif (enum_exists($attr)) {
                 $arr[$key] = $attr->value;
-            else
+            } else {
                 $arr[$key] = $attr;
+            }
         }
 
         return $arr;

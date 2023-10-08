@@ -13,7 +13,6 @@ abstract class MessageBase implements Arrayable
 {
     use HasCallableAttributes, HasSubmodels;
 
-
     /**
      * Default model.
      */
@@ -32,14 +31,16 @@ abstract class MessageBase implements Arrayable
      */
     public function __construct(array $model = [])
     {
-        $this->model = array_merge($this->model, $model);
+        $this->model              = array_merge($this->model, $model);
         $this->model['messageId'] = $this->model['messageId'] ?: uniqid('api_');
 
-        if ($this->model['to'])
+        if ($this->model['to']) {
             $this->setTo($this->model['to']);
+        }
 
-        if ($this->model['countryHint'])
+        if ($this->model['countryHint']) {
             $this->setCountryHint($this->model['countryHint']);
+        }
 
         $this->setSendTime($this->model['sendTime'] ?: now());
     }
@@ -75,7 +76,7 @@ abstract class MessageBase implements Arrayable
      */
     public function setMessageId(string|int $id): static
     {
-        $this->model['messageId'] = (string)$id;
+        $this->model['messageId'] = (string) $id;
 
         return $this;
     }

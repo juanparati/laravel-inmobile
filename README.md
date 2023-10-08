@@ -24,7 +24,7 @@ Publish configuration file:
 
     artisan vendor:publish --tag="inmobile"
 
-## Usage
+## Usage examples
 
 ### List service
 
@@ -60,5 +60,35 @@ InMobile::lists()->create('My new list');
 
 ### Recipient service
 
-Pending to document....
+#### Create recipient
 
+```php
+$recipient = InMobile::recipients()->create(
+    'listId', 
+    \Juanparati\Inmobile\Models\Recipient::make('45', '12345678')
+        ->addField('firstname', 'John')
+        ->addField('lastname', 'Random')
+        ->addField('custom1', 'foobar')
+        ->setCreatedAt(now()->subMinute()
+    )
+);
+
+echo 'Recipient id: ' . $recipient->getId();
+```
+
+#### Find recipient by Id
+
+```php
+if ($recipient = InMobile::recipients()->findById('listid', 'recipientId')) {
+    echo 'Recipient ' . $recipient->getId() . ' has phone +' . $recipient->getCode() . ' ' . $recipient->getPhone(); 
+    var_dump($recipient->toArray());
+} else {
+    echo 'Recipient not found';
+}
+```
+
+#### Find recipient by Phone
+
+```php
+$recipient = InMobile::recipients()->findByNumber('listid', '45', '12345678');
+```

@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 class RecursiveModelTest extends TestCase
 {
-
-    public function testRecipientModel() {
+    public function testRecipientModel()
+    {
         $recipient = (Recipient::make('45', '1234678'))
             ->setCreatedAt('2024-01-01 00:00:00Z');
 
@@ -26,8 +26,8 @@ class RecursiveModelTest extends TestCase
         );
     }
 
-
-    public function testEmailMessageModel() {
+    public function testEmailMessageModel()
+    {
         $msg = EmailMessage::make(
             EmailRecipient::make('test@example.net', 'test'),
             [EmailRecipient::make('dest@example.net', '')],

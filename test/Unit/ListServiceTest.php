@@ -4,9 +4,7 @@ namespace Juanparati\Inmobile\Test\Unit;
 
 use Illuminate\Support\Facades\Http;
 use Juanparati\Inmobile\Models\PaginatedResults;
-use Juanparati\Inmobile\Models\Recipient;
 use Juanparati\Inmobile\Models\RecipientList;
-
 
 class ListServiceTest extends InmobileTestBase
 {
@@ -14,27 +12,28 @@ class ListServiceTest extends InmobileTestBase
      * Test that is possible to retrieve all the lists.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
     public function testAllLists()
     {
-        $mockedLists = json_decode(static::loadMockedResponse('listsResponses.json'), true);
+        $mockedLists          = json_decode(static::loadMockedResponse('listsResponses.json'), true);
         $mockedListsPaginated = array_chunk($mockedLists, 2);
 
         Http::fakeSequence()
             ->push(
                 static::loadMockedResponse('allListsResponse.json', [
-                        '{{LISTS}}' => json_encode($mockedListsPaginated[0]),
-                        '{{IS_LAST}}' => 'false',
-                    ]
+                    '{{LISTS}}'   => json_encode($mockedListsPaginated[0]),
+                    '{{IS_LAST}}' => 'false',
+                ]
                 ))
             ->push(
                 static::loadMockedResponse('allListsResponse.json', [
-                        '{{LISTS}}' => json_encode($mockedListsPaginated[1]),
-                        '{{IS_LAST}}' => 'true',
-                    ]
+                    '{{LISTS}}'   => json_encode($mockedListsPaginated[1]),
+                    '{{IS_LAST}}' => 'true',
+                ]
                 ));
 
         $resp = $this->api()
@@ -52,6 +51,7 @@ class ListServiceTest extends InmobileTestBase
      * Test retrieve a list.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
@@ -72,20 +72,21 @@ class ListServiceTest extends InmobileTestBase
         $this->assertEquals($mockedList, $resp->toArray());
     }
 
-
     /**
      * Test list creation.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testCreateList() {
+    public function testCreateList()
+    {
         $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true)[0];
 
         Http::fake([
-            "lists" => Http::response($mockedList),
+            'lists' => Http::response($mockedList),
         ]);
 
         $resp = $this->api()
@@ -96,15 +97,17 @@ class ListServiceTest extends InmobileTestBase
         $this->assertEquals($mockedList, $resp->toArray());
     }
 
-
     /**
      * Test
+     *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testDeleteList() {
+    public function testDeleteList()
+    {
         $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true)[0];
 
         Http::fake([
@@ -118,18 +121,19 @@ class ListServiceTest extends InmobileTestBase
         $this->assertEmpty($resp);
     }
 
-
     /**
      * Test update list.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
-    public function testUpdateList() {
-        $mockedList = json_decode(static::loadMockedResponse('listsResponses.json'), true);
-        $mockedResponse = $mockedList[0];
+    public function testUpdateList()
+    {
+        $mockedList             = json_decode(static::loadMockedResponse('listsResponses.json'), true);
+        $mockedResponse         = $mockedList[0];
         $mockedResponse['name'] = $mockedList[1]['name'];
 
         Http::fake([

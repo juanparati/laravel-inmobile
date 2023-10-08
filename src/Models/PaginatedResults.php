@@ -8,53 +8,40 @@ use Juanparati\Inmobile\Models\Contracts\PostModel;
 
 class PaginatedResults extends \NoRewindIterator
 {
-
     /**
      * Current row relative to the page.
-     *
-     * @var int
      */
     protected int $currentRelativeRow = 0;
 
-
     /**
      * Current absolute row.
-     *
-     * @var int
      */
     protected int $currentRow = 0;
 
-
     /**
      * Constructor.
-     *
-     * @param Inmobile $api
-     * @param array $result
-     * @param string|null $modelType
      */
     public function __construct(
         protected Inmobile $api,
         protected array $result,
         protected ?string $modelType = null
-    ) {}
-
+    ) {
+    }
 
     /**
      * Indicates if the page is the last.
      *
      * @return mixed|true
      */
-    public function isLastPage() {
+    public function isLastPage()
+    {
         return $this->result['_links']['isLastPage'] ?? true;
     }
 
-
     /**
      * Return current page.
-     *
-     * @return array|PostModel
      */
-    public function current() : array|PostModel
+    public function current(): array|PostModel
     {
         $model = $this->result['entries'][$this->currentRelativeRow];
 
@@ -63,27 +50,25 @@ class PaginatedResults extends \NoRewindIterator
              * @var $modelType PostModel|null
              */
             $modelType = $this->modelType;
-            $model = new $modelType($model);
+            $model     = new $modelType($model);
         }
 
         return $model;
     }
 
-
     /**
      * Move to next page.
      *
-     * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
      * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
      */
     public function next(): void
     {
-        if (!isset($this->result['entries'][++$this->currentRelativeRow])) {
-            if (!$this->isLastPage()) {
+        if (! isset($this->result['entries'][++$this->currentRelativeRow])) {
+            if (! $this->isLastPage()) {
                 $this->result = $this->api->performRequest(
-                    Str::replaceFirst('/' . $this->api->getVersion() . '/', '', $this->result['_links']['next']),
+                    Str::replaceFirst('/'.$this->api->getVersion().'/', '', $this->result['_links']['next']),
                     'GET'
                 );
 
@@ -101,6 +86,6 @@ class PaginatedResults extends \NoRewindIterator
 
     public function valid(): bool
     {
-        return isset($this->result['entries'][$this->currentRelativeRow]) || !$this->isLastPage();
+        return isset($this->result['entries'][$this->currentRelativeRow]) || ! $this->isLastPage();
     }
 }
