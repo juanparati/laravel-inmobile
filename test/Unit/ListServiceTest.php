@@ -147,4 +147,28 @@ class ListServiceTest extends InmobileTestBase
         $this->assertInstanceOf(RecipientList::class, $resp);
         $this->assertEquals($mockedResponse['name'], $resp->getName());
     }
+
+
+    /**
+     * Test truncate list.
+     *
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
+     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     */
+    public function textTruncateList()
+    {
+        $listId = 'cf97f715-63d4-41df-92a1-34eb87b866b5';
+
+        Http::fake([
+            "lists/$listId/recipients/all" => Http::response()
+        ]);
+
+        $resp = $this->api()
+            ->lists()
+            ->truncate('cf97f715-63d4-41df-92a1-34eb87b866b5');
+
+        $this->assertEmpty($resp);
+    }
 }
