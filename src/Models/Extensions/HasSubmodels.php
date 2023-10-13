@@ -4,6 +4,7 @@ namespace Juanparati\Inmobile\Models\Extensions;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Juanparati\Inmobile\Enums\EnumerableParameter;
 use Juanparati\Inmobile\Inmobile;
 
 trait HasSubmodels
@@ -24,8 +25,8 @@ trait HasSubmodels
                 $arr[$key] = static::recursiveToArray($attr);
             } elseif (is_null($attr)) {
                 $arr[$key] = null;
-            } elseif (enum_exists($attr)) {
-                $arr[$key] = $attr->value;
+            } elseif ($attr instanceof EnumerableParameter) {
+                $arr[$key] = $attr->asString();
             } else {
                 $arr[$key] = $attr;
             }
