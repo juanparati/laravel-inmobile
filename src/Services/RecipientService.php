@@ -153,11 +153,14 @@ class RecipientService extends InmobileServiceBase
             return null;
         }
 
-        $rpcDst = $this->create($dstListId, $rcpSrc);
+        $rpcDst = $this->updateOrCreateByNumber(
+            $dstListId,
+            $rcpSrc->getCode(),
+            $rcpSrc->getPhone(),
+            $rcpSrc
+        );
 
-        if ($rpcDst) {
-            $this->deleteById($srcListId, $rcpSrc->getId());
-        }
+        $this->deleteById($srcListId, $rcpSrc->getId());
 
         return $rpcDst;
     }
