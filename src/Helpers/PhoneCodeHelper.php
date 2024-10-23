@@ -1,6 +1,6 @@
 <?php
 
-namespace Juanparati\Inmobile\Helpers;
+namespace Juanparati\InMobile\Helpers;
 
 class PhoneCodeHelper
 {

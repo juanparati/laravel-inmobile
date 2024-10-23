@@ -1,12 +1,12 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
-use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\InMobile\Helpers\PhoneCodeHelper;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 class Blacklist implements Arrayable, PostModel
 {
@@ -38,8 +38,8 @@ class Blacklist implements Arrayable, PostModel
         }
 
         $this->model['created'] = $this->model['created']
-            ? now()->parse($this->model['created'])->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable()
-            : now()->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable();
+            ? now()->parse($this->model['created'])->setTimezone(InMobile::DEFAULT_TIMEZONE)->toImmutable()
+            : now()->setTimezone(InMobile::DEFAULT_TIMEZONE)->toImmutable();
     }
 
     /**

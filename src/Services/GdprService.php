@@ -1,21 +1,21 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Juanparati\Inmobile\Exceptions\InmobileAuthorizationException;
-use Juanparati\Inmobile\Exceptions\InmobileRequestException;
-use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
+use Juanparati\InMobile\Exceptions\InMobileAuthorizationException;
+use Juanparati\InMobile\Exceptions\InMobileRequestException;
+use Juanparati\InMobile\Helpers\PhoneCodeHelper;
 
-class GdprService extends InmobileServiceBase
+class GdprService extends InMobileServiceBase
 {
     /**
      * Create deletion requests.
      *
      *
      * @throws GuzzleException
-     * @throws InmobileAuthorizationException
-     * @throws InmobileRequestException
+     * @throws InMobileAuthorizationException
+     * @throws InMobileRequestException
      */
     public function create(string|int $code, string|int $phone): ?array
     {

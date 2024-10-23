@@ -1,22 +1,22 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Juanparati\Inmobile\Exceptions\InmobileAuthorizationException;
-use Juanparati\Inmobile\Exceptions\InmobileRequestException;
-use Juanparati\Inmobile\Models\PaginatedResults;
-use Juanparati\Inmobile\Models\Recipient;
-use Juanparati\Inmobile\Models\RecipientList;
+use Juanparati\InMobile\Exceptions\InMobileAuthorizationException;
+use Juanparati\InMobile\Exceptions\InMobileRequestException;
+use Juanparati\InMobile\Models\PaginatedResults;
+use Juanparati\InMobile\Models\Recipient;
+use Juanparati\InMobile\Models\RecipientList;
 
-class ListService extends InmobileServiceBase
+class ListService extends InMobileServiceBase
 {
     /**
      * Get all the lists paginated.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function all(int $limit = 250): ?PaginatedResults
     {
@@ -34,8 +34,8 @@ class ListService extends InmobileServiceBase
      * Get a specific list.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function find(string $listId): ?RecipientList
     {
@@ -50,8 +50,8 @@ class ListService extends InmobileServiceBase
      * @return RecipientList
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function create(string $name)
     {
@@ -65,8 +65,8 @@ class ListService extends InmobileServiceBase
      *
      *
      * @throws GuzzleException
-     * @throws InmobileAuthorizationException
-     * @throws InmobileRequestException
+     * @throws InMobileAuthorizationException
+     * @throws InMobileRequestException
      */
     public function delete(string $listId): ?array
     {
@@ -79,8 +79,8 @@ class ListService extends InmobileServiceBase
      * @return RecipientList
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function update(string $listId, string $name)
     {
@@ -93,8 +93,8 @@ class ListService extends InmobileServiceBase
      * Get all list of recipients from a specific list.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function getRecipients(string $listId, int $limit = 250): ?PaginatedResults
     {
@@ -114,8 +114,8 @@ class ListService extends InmobileServiceBase
      * @return array|null
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function truncate(string $listId)
     {

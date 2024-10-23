@@ -1,6 +1,6 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 /**
  * Template model.

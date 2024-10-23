@@ -1,10 +1,10 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Illuminate\Support\Str;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 class PaginatedResults extends \NoRewindIterator
 {
@@ -22,11 +22,10 @@ class PaginatedResults extends \NoRewindIterator
      * Constructor.
      */
     public function __construct(
-        protected Inmobile $api,
+        protected InMobile $api,
         protected array $result,
         protected ?string $modelType = null
-    ) {
-    }
+    ) {}
 
     /**
      * Indicates if the page is the last.
@@ -60,8 +59,8 @@ class PaginatedResults extends \NoRewindIterator
      * Move to next page.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function next(): void
     {

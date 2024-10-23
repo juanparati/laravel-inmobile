@@ -1,10 +1,10 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Carbon\CarbonInterface;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
-use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
+use Juanparati\InMobile\Models\Concerns\HasCallableAttributes;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Model for e-mail message templates.

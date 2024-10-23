@@ -1,6 +1,6 @@
 <?php
 
-namespace Juanparati\Inmobile\Models\Contracts;
+namespace Juanparati\InMobile\Models\Contracts;
 
 interface PostModel
 {

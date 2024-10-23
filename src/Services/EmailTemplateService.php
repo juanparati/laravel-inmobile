@@ -1,18 +1,18 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
-use Juanparati\Inmobile\Models\EmailTemplate;
-use Juanparati\Inmobile\Models\PaginatedResults;
+use Juanparati\InMobile\Models\EmailTemplate;
+use Juanparati\InMobile\Models\PaginatedResults;
 
-class EmailTemplateService extends InmobileServiceBase
+class EmailTemplateService extends InMobileServiceBase
 {
     /**
      * Obtain all SMS templates.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function all(int $limit = 250): ?PaginatedResults
     {
@@ -30,8 +30,8 @@ class EmailTemplateService extends InmobileServiceBase
      * Obtain a specific template.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function find(string $id): ?EmailTemplate
     {

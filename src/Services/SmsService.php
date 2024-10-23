@@ -1,18 +1,18 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
-use Juanparati\Inmobile\Models\Message;
-use Juanparati\Inmobile\Models\MessageTemplate;
+use Juanparati\InMobile\Models\Message;
+use Juanparati\InMobile\Models\MessageTemplate;
 
-class SmsService extends InmobileServiceBase
+class SmsService extends InMobileServiceBase
 {
     /**
      * Send SMS messages.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function send(array $messages): array
     {
@@ -25,8 +25,8 @@ class SmsService extends InmobileServiceBase
      * Send an SMS using a template.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function sendUsingTemplate(string $templateId, array $messages): array
     {
@@ -40,8 +40,8 @@ class SmsService extends InmobileServiceBase
      * Cancel SMS messages.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function cancel(array $messageIds): array
     {
@@ -54,8 +54,8 @@ class SmsService extends InmobileServiceBase
      * Obtain SMS reports.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function status(int $limit = 250): array
     {

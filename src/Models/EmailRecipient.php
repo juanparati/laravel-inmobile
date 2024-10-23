@@ -1,9 +1,9 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Model for e-mail recipient.
@@ -32,7 +32,7 @@ final class EmailRecipient implements Arrayable, PostModel
     /**
      * Factory method.
      */
-    public static function make(string $emailAddress, string $displayName = null): static
+    public static function make(string $emailAddress, ?string $displayName = null): static
     {
         return new self($emailAddress, $displayName);
     }

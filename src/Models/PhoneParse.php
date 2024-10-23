@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
-use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
+use Juanparati\InMobile\Helpers\PhoneCodeHelper;
+use Juanparati\InMobile\Models\Concerns\HasCallableAttributes;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Phone parse model.

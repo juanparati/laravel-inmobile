@@ -1,13 +1,13 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
-use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
+use Juanparati\InMobile\Helpers\PhoneCodeHelper;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Concerns\HasCallableAttributes;
+use Juanparati\InMobile\Models\Concerns\HasSubmodels;
 
 abstract class MessageBase implements Arrayable
 {
@@ -126,7 +126,7 @@ abstract class MessageBase implements Arrayable
     {
         $this->model['sendTime'] = now()
             ->parse($dateTime)
-            ->setTimezone(Inmobile::DEFAULT_TIMEZONE)
+            ->setTimezone(InMobile::DEFAULT_TIMEZONE)
             ->toImmutable();
 
         return $this;

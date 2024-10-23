@@ -1,17 +1,17 @@
 <?php
 
-namespace Juanparati\Inmobile\Test\Unit;
+namespace Juanparati\InMobile\Test\Unit;
 
 use Illuminate\Support\Facades\Http;
-use Juanparati\Inmobile\Facades\InmobileFacade;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Providers\InmobileProvider;
+use Juanparati\InMobile\Facades\InMobileFacade;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Providers\InMobileProvider;
 use Orchestra\Testbench\TestCase;
 
 /**
- * Class InmobileTest.
+ * Class InMobileTest.
  */
-abstract class InmobileTestBase extends TestCase
+abstract class InMobileTestBase extends TestCase
 {
     /**
      * Load service providers.
@@ -21,7 +21,7 @@ abstract class InmobileTestBase extends TestCase
      */
     protected function getPackageProviders($app): array
     {
-        return [InmobileProvider::class];
+        return [InMobileProvider::class];
     }
 
     /**
@@ -29,10 +29,10 @@ abstract class InmobileTestBase extends TestCase
      *
      * @return string[]
      */
-    protected function getPackageAliases($app)
+    protected function getPackageAliases($app): array
     {
         return [
-            'Inmobile' => InmobileFacade::class,
+            'InMobile' => InMobileFacade::class,
         ];
     }
 
@@ -48,11 +48,11 @@ abstract class InmobileTestBase extends TestCase
     }
 
     /**
-     * Provide Inmobile API client.
+     * Provide InMobile API client.
      */
-    protected function api(): Inmobile
+    protected function api(): InMobile
     {
-        return $this->app->make(Inmobile::class);
+        return $this->app->make(InMobile::class);
     }
 
     /**

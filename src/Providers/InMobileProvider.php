@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Providers;
+namespace Juanparati\InMobile\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Juanparati\Inmobile\Inmobile;
+use Juanparati\InMobile\InMobile;
 
-class InmobileProvider extends ServiceProvider
+class InMobileProvider extends ServiceProvider
 {
     /**
      * Bootstrap service.
@@ -28,8 +28,10 @@ class InmobileProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/inmobile.php', 'inmobile');
 
-        $this->app->singleton(Inmobile::class, function () {
-            return new Inmobile(config('inmobile'));
+        $this->app->singleton(InMobile::class, function ($app) {
+            return new InMobile($app['config']['inmobile']);
         });
+
+        $this->app->alias(InMobile::class, 'inmobile');
     }
 }

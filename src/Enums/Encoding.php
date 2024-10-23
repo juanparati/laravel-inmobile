@@ -1,6 +1,6 @@
 <?php
 
-namespace Juanparati\Inmobile\Enums;
+namespace Juanparati\InMobile\Enums;
 
 enum Encoding: string implements EnumerableParameter
 {

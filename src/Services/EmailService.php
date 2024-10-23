@@ -1,19 +1,19 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
-use Juanparati\Inmobile\Models\EmailMessage;
-use Juanparati\Inmobile\Models\EmailMessageTemplate;
-use Juanparati\Inmobile\Models\EmailResponse;
+use Juanparati\InMobile\Models\EmailMessage;
+use Juanparati\InMobile\Models\EmailMessageTemplate;
+use Juanparati\InMobile\Models\EmailResponse;
 
-class EmailService extends InmobileServiceBase
+class EmailService extends InMobileServiceBase
 {
     /**
      * Send an email.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function send(EmailMessage $message): ?EmailResponse
     {
@@ -27,8 +27,8 @@ class EmailService extends InmobileServiceBase
      * Send e-mail template.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function sendTemplate(EmailMessageTemplate $message): ?EmailResponse
     {

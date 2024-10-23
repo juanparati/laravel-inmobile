@@ -1,19 +1,19 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
-use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
-use Juanparati\Inmobile\Models\Blacklist;
-use Juanparati\Inmobile\Models\PaginatedResults;
+use Juanparati\InMobile\Helpers\PhoneCodeHelper;
+use Juanparati\InMobile\Models\Blacklist;
+use Juanparati\InMobile\Models\PaginatedResults;
 
-class BlacklistService extends InmobileServiceBase
+class BlacklistService extends InMobileServiceBase
 {
     /**
      * Get list of blacklisted.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function all(int $limit = 250): ?PaginatedResults
     {
@@ -33,8 +33,8 @@ class BlacklistService extends InmobileServiceBase
      * Add new blacklist entry.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function create(Blacklist $blacklist): ?Blacklist
     {
@@ -47,8 +47,8 @@ class BlacklistService extends InmobileServiceBase
      * Get entry by id.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function findById(string $id): ?Blacklist
     {
@@ -61,8 +61,8 @@ class BlacklistService extends InmobileServiceBase
      * Get entry by number.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function findByNumber(string|int $code, string|int $phone): ?Blacklist
     {
@@ -78,8 +78,8 @@ class BlacklistService extends InmobileServiceBase
      * Delete entry by id.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function deleteById(string $id): array
     {
@@ -90,8 +90,8 @@ class BlacklistService extends InmobileServiceBase
      * Delete entry by number.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function deleteByNumber(string|int $code, string|int $phone): array
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
-use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Concerns\HasCallableAttributes;
+use Juanparati\InMobile\Models\Concerns\HasSubmodels;
 
 /**
  * Template model.
@@ -43,11 +43,11 @@ class Template implements Arrayable
         $this->model = array_merge($this->model, $model);
 
         if ($this->model['created']) {
-            $this->model['created'] = now()->parse($this->model['created'])->timezone(Inmobile::DEFAULT_TIMEZONE);
+            $this->model['created'] = now()->parse($this->model['created'])->timezone(InMobile::DEFAULT_TIMEZONE);
         }
 
         if ($this->model['lastUpdated']) {
-            $this->model['lastUpdated'] = now()->parse($this->model['lastUpdated'])->timezone(Inmobile::DEFAULT_TIMEZONE);
+            $this->model['lastUpdated'] = now()->parse($this->model['lastUpdated'])->timezone(InMobile::DEFAULT_TIMEZONE);
         }
     }
 

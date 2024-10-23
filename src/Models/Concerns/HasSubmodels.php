@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Models\Extensions;
+namespace Juanparati\InMobile\Models\Concerns;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Enums\EnumerableParameter;
-use Juanparati\Inmobile\Inmobile;
+use Juanparati\InMobile\Enums\EnumerableParameter;
+use Juanparati\InMobile\InMobile;
 
 trait HasSubmodels
 {
@@ -20,7 +20,7 @@ trait HasSubmodels
             if ($attr instanceof Arrayable) {
                 $arr[$key] = $attr->toArray();
             } elseif ($attr instanceof CarbonInterface) {
-                $arr[$key] = $attr->format(Inmobile::DEFAULT_DATE_FORMAT);
+                $arr[$key] = $attr->format(InMobile::DEFAULT_DATE_FORMAT);
             } elseif (is_array($attr)) {
                 $arr[$key] = static::recursiveToArray($attr);
             } elseif (is_null($attr)) {

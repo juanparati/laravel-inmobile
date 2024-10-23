@@ -1,8 +1,8 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
-use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Message template model.

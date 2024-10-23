@@ -1,7 +1,8 @@
 <?php
 
-namespace Juanparati\Inmobile\Enums;
+namespace Juanparati\InMobile\Enums;
 
-interface EnumerableParameter {
-    public function asString() : string;
+interface EnumerableParameter
+{
+    public function asString(): string;
 }

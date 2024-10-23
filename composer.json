@@ -1,6 +1,7 @@
 {
     "name": "juanparati/inmobile",
-    "description": "inMobile client for Laravel",
+    "description": "InMobile client for Laravel",
+    "keywords": ["laravel", "inmobile", "sms", "client"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -24,24 +25,24 @@
         "orchestra/testbench": ">=8.2",
         "laravel/pint": "^1.13"
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Juanparati\\Inmobile\\Providers\\InmobileProvider"
-            ]
-        },
-        "aliases": {
-            "Kickbox": "Juanparati\\Inmobile\\Facades\\InmobileFacade"
-        }
-    },
     "autoload": {
         "psr-4": {
-            "Juanparati\\Inmobile\\": "src/"
+            "Juanparati\\InMobile\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Juanparati\\Inmobile\\Test\\": "test"
+            "Juanparati\\InMobile\\Test\\": "test"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Juanparati\\InMobile\\Providers\\InMobileProvider"
+            ],
+            "aliases": {
+                "InMobile": "Juanparati\\InMobile\\Facades\\InMobileFacade"
+            }
         }
     }
 }

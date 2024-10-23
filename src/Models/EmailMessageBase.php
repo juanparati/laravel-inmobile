@@ -1,13 +1,13 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
-use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
-use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Concerns\HasCallableAttributes;
+use Juanparati\InMobile\Models\Concerns\HasSubmodels;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Base model for e-mail messages.
@@ -58,7 +58,7 @@ abstract class EmailMessageBase implements Arrayable, PostModel
     {
         $this->model['sendTime'] = now()
             ->parse($sendTime)
-            ->setTimezone(Inmobile::DEFAULT_TIMEZONE)
+            ->setTimezone(InMobile::DEFAULT_TIMEZONE)
             ->toImmutable();
 
         return $this;

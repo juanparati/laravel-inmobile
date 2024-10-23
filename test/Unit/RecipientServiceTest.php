@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Test\Unit;
+namespace Juanparati\InMobile\Test\Unit;
 
 use Illuminate\Support\Facades\Http;
-use Juanparati\Inmobile\Models\Recipient;
+use Juanparati\InMobile\Models\Recipient;
 
-class RecipientServiceTest extends InmobileTestBase
+class RecipientServiceTest extends InMobileTestBase
 {
     /**
      * Test recipient creation.
@@ -13,8 +13,8 @@ class RecipientServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testCreateRecipient()
     {
@@ -39,8 +39,8 @@ class RecipientServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testFindById()
     {
@@ -64,8 +64,8 @@ class RecipientServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testFindByNumber()
     {

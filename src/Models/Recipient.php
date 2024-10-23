@@ -1,14 +1,14 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
-use Juanparati\Inmobile\Helpers\PhoneCodeHelper;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
-use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
+use Juanparati\InMobile\Helpers\PhoneCodeHelper;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Concerns\HasSubmodels;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 class Recipient implements Arrayable, PostModel
 {
@@ -54,18 +54,20 @@ class Recipient implements Arrayable, PostModel
             $this->setCode($this->model['numberInfo']['countryCode']);
         }
 
-        $this->setCreatedAt($this->model['externalCreated'] ?: now());
+        if ($this->model['externalCreated']) {
+            $this->setCreatedAt($this->model['externalCreated']);
+        }
     }
 
     /**
      * Factory method.
      */
-    public static function make(string|int $code, string|int $phone): static
+    public static function make(string|int|null $code = null, string|int|null $phone = null): static
     {
         return new static([
             'numberInfo' => [
-                'countryCode' => (string) $code,
-                'phoneNumber' => (string) $phone,
+                'countryCode' => $code ?: (string) $code,
+                'phoneNumber' => $phone ?: (string) $phone,
             ],
         ]);
     }
@@ -131,7 +133,7 @@ class Recipient implements Arrayable, PostModel
      *
      * @return mixed|null
      */
-    public function getField(string $field = null)
+    public function getField(?string $field = null): mixed
     {
         if ($field === null) {
             return $this->model['fields'];
@@ -149,7 +151,7 @@ class Recipient implements Arrayable, PostModel
     {
         $this->model['externalCreated'] = now()
             ->parse($dateTime)
-            ->setTimezone(Inmobile::DEFAULT_TIMEZONE)
+            ->setTimezone(InMobile::DEFAULT_TIMEZONE)
             ->toImmutable();
 
         return $this;
@@ -191,5 +193,16 @@ class Recipient implements Arrayable, PostModel
         Arr::forget($model, 'created');
 
         return $model;
+    }
+
+    /**
+     * Clean all the array keys with null values.
+     */
+    public static function cleanNullableData(array $data): array
+    {
+        return collect($data)
+            ->filter(fn ($r) => $r !== null)
+            ->map(fn ($r) => is_array($r) ? static::cleanNullableData($r) : $r)
+            ->toArray();
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Juanparati\Inmobile\Test\Unit;
+namespace Juanparati\InMobile\Test\Unit;
 
 use Illuminate\Support\Facades\Http;
-use Juanparati\Inmobile\Models\PaginatedResults;
-use Juanparati\Inmobile\Models\RecipientList;
+use Juanparati\InMobile\Models\PaginatedResults;
+use Juanparati\InMobile\Models\RecipientList;
 
-class ListServiceTest extends InmobileTestBase
+class ListServiceTest extends InMobileTestBase
 {
     /**
      * Test that is possible to retrieve all the lists.
@@ -14,8 +14,8 @@ class ListServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testAllLists()
     {
@@ -53,8 +53,8 @@ class ListServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testList()
     {
@@ -78,8 +78,8 @@ class ListServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testCreateList()
     {
@@ -103,8 +103,8 @@ class ListServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testDeleteList()
     {
@@ -127,8 +127,8 @@ class ListServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testUpdateList()
     {
@@ -148,21 +148,21 @@ class ListServiceTest extends InmobileTestBase
         $this->assertEquals($mockedResponse['name'], $resp->getName());
     }
 
-
     /**
      * Test truncate list.
      *
      * @return void
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function textTruncateList()
     {
         $listId = 'cf97f715-63d4-41df-92a1-34eb87b866b5';
 
         Http::fake([
-            "lists/$listId/recipients/all" => Http::response()
+            "lists/$listId/recipients/all" => Http::response(),
         ]);
 
         $resp = $this->api()

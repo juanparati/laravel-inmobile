@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Test\Unit;
+namespace Juanparati\InMobile\Test\Unit;
 
 use Illuminate\Support\Facades\Http;
-use Juanparati\Inmobile\Models\PhoneParse;
+use Juanparati\InMobile\Models\PhoneParse;
 
-class ToolServiceTest extends InmobileTestBase
+class ToolServiceTest extends InMobileTestBase
 {
     /**
      * Test phone number parsing.
@@ -13,8 +13,8 @@ class ToolServiceTest extends InmobileTestBase
      * @return void
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function testParseNumber()
     {

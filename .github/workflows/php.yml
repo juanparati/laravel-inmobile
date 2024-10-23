@@ -1,4 +1,4 @@
-name: Inmobile Tests
+name: InMobile Tests
 
 on:
   push:

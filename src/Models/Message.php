@@ -1,9 +1,9 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
-use Juanparati\Inmobile\Enums\Encoding;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\InMobile\Enums\Encoding;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Message model.
@@ -42,10 +42,10 @@ class Message extends MessageBase implements PostModel
     /**
      * Factory method.
      *
-     * @param  string|int  $code Destination country code
-     * @param  string|int  $phone Destination phone (without country code)
-     * @param  string|int  $from Sender
-     * @param  string  $text Message
+     * @param  string|int  $code  Destination country code
+     * @param  string|int  $phone  Destination phone (without country code)
+     * @param  string|int  $from  Sender
+     * @param  string  $text  Message
      */
     public static function make(
         string|int $code,

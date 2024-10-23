@@ -1,23 +1,23 @@
 <?php
 
-namespace Juanparati\Inmobile;
+namespace Juanparati\InMobile;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use Juanparati\Inmobile\Exceptions\InmobileAuthorizationException;
-use Juanparati\Inmobile\Exceptions\InmobileRequestException;
-use Juanparati\Inmobile\Services\BlacklistService;
-use Juanparati\Inmobile\Services\EmailService;
-use Juanparati\Inmobile\Services\EmailTemplateService;
-use Juanparati\Inmobile\Services\GdprService;
-use Juanparati\Inmobile\Services\ListService;
-use Juanparati\Inmobile\Services\RecipientService;
-use Juanparati\Inmobile\Services\SmsService;
-use Juanparati\Inmobile\Services\TemplateService;
-use Juanparati\Inmobile\Services\ToolService;
+use Juanparati\InMobile\Exceptions\InMobileAuthorizationException;
+use Juanparati\InMobile\Exceptions\InMobileRequestException;
+use Juanparati\InMobile\Services\BlacklistService;
+use Juanparati\InMobile\Services\EmailService;
+use Juanparati\InMobile\Services\EmailTemplateService;
+use Juanparati\InMobile\Services\GdprService;
+use Juanparati\InMobile\Services\ListService;
+use Juanparati\InMobile\Services\RecipientService;
+use Juanparati\InMobile\Services\SmsService;
+use Juanparati\InMobile\Services\TemplateService;
+use Juanparati\InMobile\Services\ToolService;
 
-class Inmobile
+class InMobile
 {
     /**
      * Default timezone used by inMobile dates.
@@ -64,8 +64,8 @@ class Inmobile
     /**
      * Perform a request.
      *
-     * @throws InmobileAuthorizationException
-     * @throws InmobileRequestException
+     * @throws InMobileAuthorizationException
+     * @throws InMobileRequestException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function performRequest(string $endpoint, string $method, array $data = []): ?array
@@ -84,8 +84,8 @@ class Inmobile
         if (! empty(trim($response->body()))) {
             $message = $response->json();
 
-            if (JSON_ERROR_NONE !== json_last_error()) {
-                throw new InmobileRequestException(
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new InMobileRequestException(
                     'Invalid response format: '.$response->getBody(),
                     $response->getStatusCode()
                 );
@@ -99,17 +99,20 @@ class Inmobile
         switch ($statusCode) {
             case 500:
             case 400:
-                throw new InmobileRequestException($response->getBody(), $statusCode);
+                throw new InMobileRequestException($response->getBody(), $statusCode);
             case 401:
-                throw new InmobileAuthorizationException($response->getBody(), $statusCode);
+                throw new InMobileAuthorizationException($response->getBody(), $statusCode);
             case 404:
-                if (! empty($message['errorMessage']) && Str::contains($message['errorMessage'], 'invalid resource', true)) {
-                    throw new InmobileRequestException($response->getBody(), $statusCode);
+                if ($method === 'PUT' || (
+                    ! empty($message['errorMessage']) &&
+                    Str::contains($message['errorMessage'], 'invalid resource', true)
+                )) {
+                    throw new InMobileRequestException($response->getBody(), $statusCode);
                 }
                 break;
 
             default:
-                throw new InmobileRequestException('Unknown error: '.$response->getBody(), $statusCode);
+                throw new InMobileRequestException('Unknown error: '.$response->getBody(), $statusCode);
         }
 
         return null;

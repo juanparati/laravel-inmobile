@@ -1,12 +1,12 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
-use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\Concerns\HasSubmodels;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 class RecipientList implements Arrayable, PostModel
 {
@@ -28,8 +28,8 @@ class RecipientList implements Arrayable, PostModel
     {
         $this->model            = array_merge($this->model, $model);
         $this->model['created'] = $this->model['created']
-            ? now()->parse($this->model['created'])->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable()
-            : now()->setTimezone(Inmobile::DEFAULT_TIMEZONE)->toImmutable();
+            ? now()->parse($this->model['created'])->setTimezone(InMobile::DEFAULT_TIMEZONE)->toImmutable()
+            : now()->setTimezone(InMobile::DEFAULT_TIMEZONE)->toImmutable();
     }
 
     /**

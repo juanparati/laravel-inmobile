@@ -1,9 +1,9 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Carbon\CarbonInterface;
-use Juanparati\Inmobile\Models\Contracts\PostModel;
+use Juanparati\InMobile\Models\Contracts\PostModel;
 
 /**
  * Model for e-mail messages.

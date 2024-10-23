@@ -1,11 +1,11 @@
 <?php
 
-namespace Juanparati\Inmobile\Test\Unit;
+namespace Juanparati\InMobile\Test\Unit;
 
-use Juanparati\Inmobile\Inmobile;
-use Juanparati\Inmobile\Models\EmailMessage;
-use Juanparati\Inmobile\Models\EmailRecipient;
-use Juanparati\Inmobile\Models\Recipient;
+use Juanparati\InMobile\InMobile;
+use Juanparati\InMobile\Models\EmailMessage;
+use Juanparati\InMobile\Models\EmailRecipient;
+use Juanparati\InMobile\Models\Recipient;
 use PHPUnit\Framework\TestCase;
 
 class RecursiveModelTest extends TestCase
@@ -21,7 +21,7 @@ class RecursiveModelTest extends TestCase
         $this->assertEquals($recipient->getCode(), $recipientAsArray['numberInfo']['countryCode']);
 
         $this->assertEquals(
-            $recipient->getCreatedAt()->format(Inmobile::DEFAULT_DATE_FORMAT),
+            $recipient->getCreatedAt()->format(InMobile::DEFAULT_DATE_FORMAT),
             $recipientAsArray['externalCreated']
         );
     }
@@ -39,7 +39,7 @@ class RecursiveModelTest extends TestCase
 
         $this->assertEquals($msg->getFrom()->getEmailAddress(), $msgAsArray['from']['emailAddress']);
         $this->assertEquals($msg->getTo()[0]->toArray(), $msgAsArray['to'][0]);
-        $this->assertEquals($msg->getSendTime()->format(Inmobile::DEFAULT_DATE_FORMAT), $msgAsArray['sendTime']);
+        $this->assertEquals($msg->getSendTime()->format(InMobile::DEFAULT_DATE_FORMAT), $msgAsArray['sendTime']);
     }
 
 }

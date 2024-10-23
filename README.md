@@ -1,22 +1,11 @@
-# inMobile library for Laravel
+# InMobile library for Laravel
 
-[inMobile](https://inmobile.dk) library for Laravel.
-
-**Note**: Do not use this library on production. It's still under development
+[InMobile](https://inmobile.dk) library for Laravel.
 
 
 ## Installation
 
     composer require juanparati/inmobile
-
-Facade registration (optional)
-
-    'aliases' => [
-        ...
-        'InMobile' => \Juanparati\Inmobile\Facades\InmobileFacade::class,
-        ...
-    ]
-
 
 ## Configuration
 
@@ -58,22 +47,78 @@ InMobile::lists()->find($myListId);
 InMobile::lists()->create('My new list');
 ```
 
+
+#### Get all recipients in list
+
+```php
+$recipients = InMobile::lists()->getRecipients($myListId);
+
+// Will automatically transverse all the pages automatically.
+// Rewind is not allowed.
+foreach ($recipients as $recipient)
+    var_dump($recipient->toArray());
+```
+
+#### Other methods
+- update
+- delete
+- truncate
+
 ### Recipient service
 
 #### Create recipient
 
 ```php
 $recipient = InMobile::recipients()->create(
-    'listId', 
-    \Juanparati\Inmobile\Models\Recipient::make('45', '12345678')
+    $listId, 
+    \Juanparati\InMobile\Models\Recipient::make('45', '12345678')
         ->addField('firstname', 'John')
         ->addField('lastname', 'Random')
         ->addField('custom1', 'foobar')
-        ->setCreatedAt(now()->subMinute()
-    )
+        ->setCreatedAt(now()->subMinute())
 );
 
 echo 'Recipient id: ' . $recipient->getId();
+```
+
+#### Update recipient
+
+```php
+
+// Only update some fields
+InMobile::recipients()->updateById(
+    $listId,
+    $recipientId, 
+    \Juanparati\InMobile\Models\Recipient::make()
+        ->addField('firstname', 'John')
+        ->addField('lastname', 'Random')
+        ->addField('custom1', 'foobar'),       
+    false   // Indicate that only values set are updated (Default)
+);
+
+// Full update
+InMobile::recipients()->updateById(
+    $listId,
+    $recipientId, 
+    \Juanparati\InMobile\Models\Recipient::make('35', '12345678')
+        ->addField('firstname', 'John')
+        ->addField('lastname', 'Random')
+        ->addField('custom1', 'foobar')
+        ->setCreatedAt(now())
+        ,       
+    true   // Indicate that all fields are update, the fields missing in the recipient model are emptied
+);
+
+// or use updateByNumber instead (It's slower than updateById because it has to lookup for the recipient Id)
+InMobile::recipients()->updateByNumber(
+    $listId,
+    $prefix,
+    $number,
+     \Juanparati\InMobile\Models\Recipient::make()
+        ->addField('firstname', 'John')
+        ->addField('lastname', 'Random')
+        ->addField('custom1', 'foobar')
+);
 ```
 
 #### Find recipient by Id
@@ -87,8 +132,57 @@ if ($recipient = InMobile::recipients()->findById('listid', 'recipientId')) {
 }
 ```
 
-#### Find recipient by Phone
+#### Find recipient
 
 ```php
+// Search by phone number
 $recipient = InMobile::recipients()->findByNumber('listid', '45', '12345678');
+
+// or search by recipient id
+$recipient = InMobile::recipients()->findById('listid', 'recipientId');
+
 ```
+
+#### Other methods
+- deleteById
+- deleteByNumber
+- updateOrCreateByNumber
+- moveToList
+
+
+### Blacklist service
+
+#### Methods
+- all
+- create
+- findById
+- findByNumber
+- deleteById
+- deleteByNumber
+
+
+### Email service
+
+#### Methods
+- send
+- sendTemplate
+
+
+### Email template service
+
+#### Methods
+- all
+- find
+
+
+### Gdpr service
+- create
+
+
+### Sms service
+
+#### Methods
+- send
+- sendUsingTemplate
+- cancel
+- status

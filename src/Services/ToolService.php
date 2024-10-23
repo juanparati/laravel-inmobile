@@ -1,10 +1,10 @@
 <?php
 
-namespace Juanparati\Inmobile\Services;
+namespace Juanparati\InMobile\Services;
 
-use Juanparati\Inmobile\Models\PhoneParse;
+use Juanparati\InMobile\Models\PhoneParse;
 
-class ToolService extends InmobileServiceBase
+class ToolService extends InMobileServiceBase
 {
     /**
      * Parse and check phone numbers.
@@ -13,8 +13,8 @@ class ToolService extends InmobileServiceBase
      * @return PhoneParse[]
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileAuthorizationException
-     * @throws \Juanparati\Inmobile\Exceptions\InmobileRequestException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
+     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
     public function phoneParse(array $numbers): array
     {

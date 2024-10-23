@@ -1,10 +1,10 @@
 <?php
 
-namespace Juanparati\Inmobile\Models;
+namespace Juanparati\InMobile\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Juanparati\Inmobile\Models\Extensions\HasCallableAttributes;
-use Juanparati\Inmobile\Models\Extensions\HasSubmodels;
+use Juanparati\InMobile\Models\Concerns\HasCallableAttributes;
+use Juanparati\InMobile\Models\Concerns\HasSubmodels;
 
 final class EmailResponse implements Arrayable
 {

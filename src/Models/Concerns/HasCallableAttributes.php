@@ -1,6 +1,6 @@
 <?php
 
-namespace Juanparati\Inmobile\Models\Extensions;
+namespace Juanparati\InMobile\Models\Concerns;
 
 use Illuminate\Support\Str;
 
