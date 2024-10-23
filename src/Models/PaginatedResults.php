@@ -25,7 +25,9 @@ class PaginatedResults extends \NoRewindIterator
         protected InMobile $api,
         protected array $result,
         protected ?string $modelType = null
-    ) {}
+    ) {
+        parent::__construct((new \ArrayObject($result))->getIterator());
+    }
 
     /**
      * Indicates if the page is the last.
