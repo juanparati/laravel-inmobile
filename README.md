@@ -163,10 +163,28 @@ $recipient = InMobile::recipients()->findById('listid', 'recipientId');
 
 ### Email service
 
-#### Methods
-- send
-- sendTemplate
 
+#### Send message
+
+```PHP
+$message = \Juanparati\InMobile\Models\Message(
+    '+45', 
+    '1234567',
+    'from me',
+    'Hello world'
+);
+
+InMobile::sms()->send([$message]);
+```
+
+#### Send template message
+
+```PHP
+$templateMessage = \Juanparati\InMobile\Models\MessageTemplate::make('+45', '1234567');
+$templateMessage->addPlaceholder('{NAME}', 'John Random');
+
+InMobile::sms()->sendUsingTemplate('FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF', [$templateMessage]);
+```
 
 ### Email template service
 
