@@ -38,7 +38,6 @@ class MessageTemplate extends MessageBase implements PostModel
     public static function make(
         string|int $code,
         string|int $phone,
-        string|int $from,
     ): static {
         return new static([
             'to'          => $code.$phone,
