@@ -43,7 +43,6 @@ class MessageTemplate extends MessageBase implements PostModel
         return new static([
             'to'          => $code.$phone,
             'countryHint' => $code,
-            'from'        => $from,
         ]);
     }
 
