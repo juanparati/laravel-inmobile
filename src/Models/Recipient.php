@@ -57,6 +57,13 @@ class Recipient implements Arrayable, PostModel
         if ($this->model['externalCreated']) {
             $this->setCreatedAt($this->model['externalCreated']);
         }
+
+        if ($this->model['created']) {
+            $this->model['created'] = now()
+                ->parse($this->model['created'])
+                ->setTimezone(InMobile::DEFAULT_TIMEZONE)
+                ->toImmutable();
+        }
     }
 
     /**
@@ -160,7 +167,7 @@ class Recipient implements Arrayable, PostModel
     /**
      * Get externalCreated.
      */
-    public function getCreatedAt(): CarbonInterface
+    public function getCreatedAt(): ?CarbonInterface
     {
         return $this->model['externalCreated'];
     }
@@ -171,6 +178,22 @@ class Recipient implements Arrayable, PostModel
     public function getId(): ?string
     {
         return $this->model['id'];
+    }
+
+    /**
+     * Get the list Id.
+     */
+    public function getListId(): ?string
+    {
+        return $this->model['listId'];
+    }
+
+    /**
+     * Get created.
+     */
+    public function getCreated(): ?CarbonInterface
+    {
+        return $this->model['created'];
     }
 
     /**
