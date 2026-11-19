@@ -62,13 +62,11 @@ class RecipientService extends InMobileServiceBase
     /**
      * Delete recipient by Id.
      *
-     * @return array|null
-     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function deleteById(string $listId, string $id)
+    public function deleteById(string $listId, string $id): ?array
     {
         return $this->api->performRequest("lists/$listId/recipients/$id", 'DELETE');
     }
@@ -126,8 +124,6 @@ class RecipientService extends InMobileServiceBase
     /**
      * Delete recipient by number.
      *
-     * @return array|null
-     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
@@ -136,7 +132,7 @@ class RecipientService extends InMobileServiceBase
         string $listId,
         string|int $code,
         string|int $phone
-    ) {
+    ): ?array {
         return $this->api->performRequest("lists/$listId/recipients/ByNumber", 'DELETE', [
             'countryCode' => PhoneCodeHelper::sanitize($code),
             'phoneNumber' => $phone,

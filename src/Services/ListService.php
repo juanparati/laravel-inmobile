@@ -111,13 +111,13 @@ class ListService extends InMobileServiceBase
     /**
      * Delete all recipients from a list.
      *
-     * @return array|null
+     * @param string $listId
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
-     * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
+     * @throws GuzzleException
+     * @throws InMobileAuthorizationException
+     * @throws InMobileRequestException
      */
-    public function truncate(string $listId)
+    public function truncate(string $listId): ?array
     {
         return $this->api->performRequest("lists/$listId/recipients/all", 'DELETE');
     }

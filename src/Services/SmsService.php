@@ -14,7 +14,7 @@ class SmsService extends InMobileServiceBase
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function send(array $messages): array
+    public function send(array $messages): ?array
     {
         return $this->api->performRequest('sms/outgoing', 'POST', [
             'messages' => array_map(fn (Message $r) => $r->asPostData(), $messages),
@@ -28,7 +28,7 @@ class SmsService extends InMobileServiceBase
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function sendUsingTemplate(string $templateId, array $messages): array
+    public function sendUsingTemplate(string $templateId, array $messages): ?array
     {
         return $this->api->performRequest('sms/outgoing/sendusingtemplate', 'POST', [
             'templateId' => $templateId,
@@ -43,7 +43,7 @@ class SmsService extends InMobileServiceBase
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function cancel(array $messageIds): array
+    public function cancel(array $messageIds): ?array
     {
         return $this->api->performRequest('sms/outgoing/cancel', 'POST', [
             'messageIds' => $messageIds,
@@ -57,7 +57,7 @@ class SmsService extends InMobileServiceBase
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function status(int $limit = 250): array
+    public function status(): ?array
     {
         return $this->api->performRequest('sms/outgoing/reports', 'GET');
     }

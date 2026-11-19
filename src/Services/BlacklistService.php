@@ -81,7 +81,7 @@ class BlacklistService extends InMobileServiceBase
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function deleteById(string $id): array
+    public function deleteById(string $id): ?array
     {
         return $this->api->performRequest("blacklist/$id", 'DELETE');
     }
@@ -93,7 +93,7 @@ class BlacklistService extends InMobileServiceBase
      * @throws \Juanparati\InMobile\Exceptions\InMobileAuthorizationException
      * @throws \Juanparati\InMobile\Exceptions\InMobileRequestException
      */
-    public function deleteByNumber(string|int $code, string|int $phone): array
+    public function deleteByNumber(string|int $code, string|int $phone): ?array
     {
         return $this->api->performRequest('blacklist/ByNumber', 'DELETE', [
             'countryCode' => PhoneCodeHelper::sanitize($code),
